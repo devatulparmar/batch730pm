@@ -15,10 +15,22 @@ class _Screen1State extends State<Screen1> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Screen 1'),
+        title: Text('Batch 7:30 PM'),
       ),
-      body: Column(
+      body: ListView(
         children: [
+          Center(
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  routeLogin,
+                );
+              },
+              child: Text('Login'),
+            ),
+          ),
+          SizedBox(height: 15),
           Center(
             child: ElevatedButton(
               onPressed: () {
