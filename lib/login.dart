@@ -13,6 +13,7 @@ class _LoginScreenState extends State<LoginScreen> {
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
   String emailText = '';
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -28,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
     _passwordController.dispose();
   }
 
-  _clearData(){
+  _clearData() {
     _emailController.clear();
     _passwordController.clear();
   }
@@ -42,89 +43,157 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(10),
-        child: Column(
-          children: [
-
-            TextField(
-              controller: _emailController,
-              keyboardType: TextInputType.emailAddress,
-              textInputAction: TextInputAction.next,
-              onChanged: (String s){
-                emailText = s;
-               setState(() {});
-              },
-              readOnly: true,
-              // onSubmitted: (String s){
-              //   print('on submitted');
-              // },
-              // onEditingComplete: (){
-              //   print('Function called');
-              //   // FocusManager.instance.primaryFocus?.unfocus();
-              // },
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(35),
-                ),
-                hintText: "Enter an Email",
-                label: const Text('This is label'),
-                prefixIcon: const Icon(
-                  Icons.email,
-                  color: Colors.red,
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            TextField(
-              controller: _passwordController,
-              obscureText: isObscureText,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(35),
-                ),
-                hintText: "Enter a Password",
-                suffixIcon: IconButton(
-                  onPressed: () {
-                    setState(() {
-                      isObscureText = !isObscureText;
-                    });
-                  },
-                  icon: Icon(
-                    Icons.remove_red_eye_outlined,
-                    color: isObscureText ? Colors.grey : Colors.blue,
+        child: Form(
+          key: _formKey,
+          // autovalidateMode: AutovalidateMode.always,
+          onChanged: () {
+            Form.of(primaryFocus!.context!).save();
+          },
+          child: Column(
+            children: [
+              TextFormField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(35),
+                  ),
+                  hintText: "Enter an Email",
+                  label: const Text('This is label'),
+                  prefixIcon: const Icon(
+                    Icons.email,
+                    color: Colors.red,
                   ),
                 ),
-                focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(35),
-                    borderSide:
-                        const BorderSide(color: Colors.green, width: 2)),
+                onSaved: (String? value) {
+                  // This optional block of code can be used to run
+                  // code when the user saves the form.
+                },
+                validator: (String? s) {
+                  if (s == null || s.isEmpty) {
+                    return 'Please enter some text';
+                  }
+                  return null;
+                },
               ),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                _emailController.text;
-                _passwordController.text;
-                setState(() {});
-              },
-              child: const Text('Click'),
-            ),
-            const SizedBox(height: 20),
-            Text('Email : ${_emailController.text}'),
-            const SizedBox(height: 20),
-            Text('Password : ${_passwordController.text}'),
 
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                _clearData();
-                setState(() {});
-              },
-              child: const Text('Reset'),
-            ),
-            const SizedBox(height: 20),
-          ],
+              // const SizedBox(
+              //   height: 20,
+              // ),
+              // TextField(
+              //   controller: _emailController,
+              //   keyboardType: TextInputType.emailAddress,
+              //   textInputAction: TextInputAction.next,
+              //   onChanged: (String s){
+              //     emailText = s;
+              //    setState(() {});
+              //   },
+              //   // onSubmitted: (String s){
+              //   //   print('on submitted');
+              //   // },
+              //   // onEditingComplete: (){
+              //   //   print('Function called');
+              //   //   // FocusManager.instance.primaryFocus?.unfocus();
+              //   // },
+              //   decoration: InputDecoration(
+              //     border: OutlineInputBorder(
+              //       borderRadius: BorderRadius.circular(35),
+              //     ),
+              //     hintText: "Enter an Email",
+              //     label: const Text('This is label'),
+              //     prefixIcon: const Icon(
+              //       Icons.email,
+              //       color: Colors.red,
+              //     ),
+              //   ),
+              // ),
+
+              const SizedBox(
+                height: 20,
+              ),
+              TextField(
+                controller: _passwordController,
+                obscureText: isObscureText,
+
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(35),
+                  ),
+                  hintText: "Enter a Password",
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        isObscureText = !isObscureText;
+                      });
+                    },
+                    icon: Icon(
+                      Icons.remove_red_eye_outlined,
+                      color: isObscureText ? Colors.grey : Colors.blue,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(35),
+                      borderSide:
+                          const BorderSide(color: Colors.green, width: 2)),
+                ),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  _emailController.text;
+                  _passwordController.text;
+
+                  if (_formKey.currentState!.validate() == true) {
+                   ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                         content: Text('Success'),
+                        backgroundColor: Colors.green,
+                        padding: EdgeInsets.all(10),
+                       )
+                   );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                         SnackBar(
+                          content: Text('New Video out there!'),
+                          backgroundColor: Colors.red.shade600,
+                          padding: EdgeInsets.all(10),
+                          behavior: SnackBarBehavior.floating,
+                          elevation: 10,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(35),
+                          ),
+                           duration: Duration(minutes: 5),
+                           action: SnackBarAction(
+                             onPressed: (){
+                               print('closed snack bar');
+                             },
+                             label: 'View',
+                             textColor: Colors.black,
+                           ),
+                           showCloseIcon: true,
+                           closeIconColor: Colors.blue,
+                           dismissDirection: DismissDirection.none,
+                        )
+                    );
+                  }
+                  setState(() {});
+                },
+                child: const Text('Click'),
+              ),
+              const SizedBox(height: 20),
+              Text('Email : ${_emailController.text}'),
+              const SizedBox(height: 20),
+              Text('Password : ${_passwordController.text}'),
+
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  _clearData();
+                  setState(() {});
+                },
+                child: const Text('Reset'),
+              ),
+              const SizedBox(height: 20),
+            ],
+          ),
         ),
       ),
     );
