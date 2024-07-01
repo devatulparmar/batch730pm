@@ -1,4 +1,5 @@
 import 'package:batch730pm/screen1.dart';
+import 'package:batch730pm/utils/common_snackbar.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -52,6 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             children: [
               TextFormField(
+                controller: _emailController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(35),
@@ -112,7 +114,6 @@ class _LoginScreenState extends State<LoginScreen> {
               TextField(
                 controller: _passwordController,
                 obscureText: isObscureText,
-
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(35),
@@ -138,41 +139,19 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  _emailController.text;
-                  _passwordController.text;
-
                   if (_formKey.currentState!.validate() == true) {
-                   ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                         content: Text('Success'),
-                        backgroundColor: Colors.green,
-                        padding: EdgeInsets.all(10),
-                       )
-                   );
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                         SnackBar(
-                          content: Text('New Video out there!'),
-                          backgroundColor: Colors.red.shade600,
-                          padding: EdgeInsets.all(10),
-                          behavior: SnackBarBehavior.floating,
-                          elevation: 10,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(35),
-                          ),
-                           duration: Duration(minutes: 5),
-                           action: SnackBarAction(
-                             onPressed: (){
-                               print('closed snack bar');
-                             },
-                             label: 'View',
-                             textColor: Colors.black,
-                           ),
-                           showCloseIcon: true,
-                           closeIconColor: Colors.blue,
-                           dismissDirection: DismissDirection.none,
-                        )
+                    MySnackBar.showMySnackBar(
+                      content: "Success",
+                      backgroundColor: Colors.green,
+                      context: context,
                     );
+                    // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    //   content: Text('Success'),
+                    //   backgroundColor: Colors.green,
+                    //   padding: EdgeInsets.all(10),
+                    // ));
+                  } else {
+
                   }
                   setState(() {});
                 },
