@@ -1,5 +1,6 @@
 import 'package:batch730pm/screen1.dart';
 import 'package:batch730pm/utils/common_snackbar.dart';
+import 'package:batch730pm/widgets/common_drawer.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -42,6 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
         backgroundColor: Colors.red,
         title: const Text('Login'),
       ),
+      drawer: const CommonDrawer(),
       body: Padding(
         padding: const EdgeInsets.all(10),
         child: Form(

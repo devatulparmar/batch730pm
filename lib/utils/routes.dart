@@ -1,3 +1,4 @@
+import 'package:batch730pm/list.dart';
 import 'package:batch730pm/utils/const.dart';
 import 'package:batch730pm/login.dart';
 import 'package:batch730pm/screen1.dart';
@@ -13,6 +14,8 @@ class MyAppRouter {
         return MaterialPageRoute(builder: (_) => Screen2());
       case routeLogin:
         return MaterialPageRoute(builder: (_) => LoginScreen());
+      case listScreen:
+        return MaterialPageRoute(builder: (_) => ListScreen());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
