@@ -5,14 +5,14 @@ import 'package:batch730pm/screen2.dart';
 import 'package:batch730pm/widgets/common_drawer.dart';
 import 'package:flutter/material.dart';
 
-class Screen1 extends StatefulWidget {
-  const Screen1({Key? key}) : super(key: key);
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<Screen1> createState() => _Screen1State();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _Screen1State extends State<Screen1> {
+class _HomeScreenState extends State<HomeScreen> {
   ListView _listviewWidget(BuildContext context) {
     return ListView(
       children: [
@@ -83,7 +83,7 @@ class _Screen1State extends State<Screen1> {
       appBar: AppBar(
         title: const Text('Batch 7:30 PM'),
       ),
-      endDrawer: const CommonDrawer(),
+      // endDrawer: const CommonDrawer(),
       drawer: const CommonDrawer(),
       body: _listviewWidget(context),
     );

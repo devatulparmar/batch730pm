@@ -1,110 +1,94 @@
-
 import 'package:flutter/material.dart';
 
-class CommonDrawer extends StatelessWidget {
+class CommonDrawer extends StatefulWidget {
   const CommonDrawer({Key? key}) : super(key: key);
+
+  @override
+  State<CommonDrawer> createState() => _CommonDrawerState();
+}
+
+class _CommonDrawerState extends State<CommonDrawer> {
+  bool isHomeSelected = false;
+  bool isListSelected = false;
+  bool isImageSelected = false;
+
+  Widget commonListTile({
+    required Widget icon,
+    required String title,
+    required bool isSelected,
+    Function()? onTap,
+  }) {
+    return ListTile(
+      leading: icon,
+      trailing: const Icon(
+        Icons.arrow_forward_ios,
+      ),
+      title: Text(title),
+      selectedColor: Colors.white,
+      selectedTileColor: Colors.blueAccent,
+      tileColor: Colors.grey,
+      textColor: Colors.white,
+      iconColor: Colors.white,
+      selected: isSelected,
+      onTap: onTap,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Drawer(
       // width: 500,
-      child: Column(
+      child: ListView(
         children: [
-          SizedBox(
-            height: 80,
+          commonListTile(
+            icon: const Icon(Icons.home),
+            title: 'Home Screen',
+            isSelected: isHomeSelected,
+            onTap: () {
+              isHomeSelected = true;
+              isListSelected = false;
+              isImageSelected = false;
+              setState(() {});
+            },
           ),
-          GestureDetector(
-            onTap: (){
-              print('clicked here');
+          commonListTile(
+            icon: const Icon(Icons.list),
+            title: 'List Screen',
+            isSelected: isListSelected,
+            onTap: () {
+              isHomeSelected = false;
+              isImageSelected = false;
+              isListSelected = true;
+              setState(() {});
             },
-            onDoubleTap: (){
-              print('on double tap');
+          ),
+          commonListTile(
+            icon: const Icon(Icons.image),
+            title: 'Image Screen',
+            isSelected: isImageSelected,
+            onTap: () {
+              isHomeSelected = false;
+              isListSelected = false;
+              isImageSelected = true;
+              setState(() {});
             },
+          ),
 
-            child: Container(
-              color: Colors.lightBlue,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    Text('Menu 1'),
-                  ],
-                ),
-              ),
+          ListTile(
+            leading: const Icon(
+              Icons.arrow_forward_ios,
             ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          InkWell(
-            onTap: (){
-              print('clicked inkwell');
-            },
-
-            child: Container(
-              // color: Colors.lightBlue,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    Text('Menu 1'),
-                  ],
-                ),
-              ),
+            trailing: const Icon(
+              Icons.arrow_forward_ios,
             ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Container(
-            color: Colors.lightBlue,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Text('Menu 1'),
-                ],
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Container(
-            // color: Colors.lightBlue,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      print('Clicked');
-                    },
-                    child: Text(
-                      'Menu button',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Container(
-            color: Colors.lightBlue,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Text('Menu 1'),
-                ],
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 10,
+            title: Text("title"),
+            selectedColor: Colors.white,
+            selectedTileColor: Colors.blueAccent,
+            tileColor: Colors.grey,
+            textColor: Colors.white,
+            iconColor: Colors.white,
+            selected: isHomeSelected,
+            // onTap: onTap,
           ),
         ],
       ),
