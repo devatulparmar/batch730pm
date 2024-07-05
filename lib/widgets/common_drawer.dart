@@ -1,3 +1,5 @@
+import 'package:batch730pm/widgets/common_container.dart';
+import 'package:batch730pm/widgets/common_list_tile.dart';
 import 'package:flutter/material.dart';
 
 class CommonDrawer extends StatefulWidget {
@@ -12,7 +14,7 @@ class _CommonDrawerState extends State<CommonDrawer> {
   bool isListSelected = false;
   bool isImageSelected = false;
 
-  Widget commonListTile({
+  Widget commonListTileFunction({
     required Widget icon,
     required String title,
     required bool isSelected,
@@ -40,7 +42,12 @@ class _CommonDrawerState extends State<CommonDrawer> {
       // width: 500,
       child: ListView(
         children: [
-          commonListTile(
+          CommonListTile(
+            icon: const Icon(Icons.home),
+            title: 'Home Screen',
+            isSelected: isHomeSelected,
+          ),
+          commonListTileFunction(
             icon: const Icon(Icons.home),
             title: 'Home Screen',
             isSelected: isHomeSelected,
@@ -51,7 +58,7 @@ class _CommonDrawerState extends State<CommonDrawer> {
               setState(() {});
             },
           ),
-          commonListTile(
+          commonListTileFunction(
             icon: const Icon(Icons.list),
             title: 'List Screen',
             isSelected: isListSelected,
@@ -62,7 +69,7 @@ class _CommonDrawerState extends State<CommonDrawer> {
               setState(() {});
             },
           ),
-          commonListTile(
+          commonListTileFunction(
             icon: const Icon(Icons.image),
             title: 'Image Screen',
             isSelected: isImageSelected,
@@ -73,7 +80,12 @@ class _CommonDrawerState extends State<CommonDrawer> {
               setState(() {});
             },
           ),
-
+          CommonListTile(
+            icon: const Icon(Icons.arrow_forward_ios),
+            title: "title",
+            isSelected: isHomeSelected,
+            // onTap: ,
+          ),
           ListTile(
             leading: const Icon(
               Icons.arrow_forward_ios,
@@ -81,7 +93,7 @@ class _CommonDrawerState extends State<CommonDrawer> {
             trailing: const Icon(
               Icons.arrow_forward_ios,
             ),
-            title: Text("title"),
+            title: const Text("title"),
             selectedColor: Colors.white,
             selectedTileColor: Colors.blueAccent,
             tileColor: Colors.grey,
@@ -89,6 +101,12 @@ class _CommonDrawerState extends State<CommonDrawer> {
             iconColor: Colors.white,
             selected: isHomeSelected,
             // onTap: onTap,
+          ),
+          const CommonContainer(
+            color: Colors.red,
+          ),
+          const CommonContainer(
+            color: Colors.green,
           ),
         ],
       ),
