@@ -8,7 +8,8 @@ class ListScreen extends StatefulWidget {
 }
 
 class _ListScreenState extends State<ListScreen> {
-  List _list = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  List _list = [];
+  List<Widget> _list3 = [];
   List _list2 = [
     "Vadodara",
     "Surat",
@@ -16,7 +17,91 @@ class _ListScreenState extends State<ListScreen> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    _calculate();
+  }
+
+  void _calculate() {
+    for (int i = 0; i < 50; i++) {
+      _list.add(i);
+    }
+
+  }
+
+  @override
   Widget build(BuildContext context) {
+
+    // _list3 = List.generate(50, (int index){
+    //   return Padding(
+    //     padding: const EdgeInsets.all(10),
+    //     child: Center(
+    //       child: Row(
+    //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //         children: [
+    //           Text("Hello"),
+    //           Text("Hello"),
+    //           Text(index.toString()),
+    //           IconButton(
+    //             onPressed: () {
+    //               // _list.removeAt(index);
+    //               // _list.remove(_list[index]);
+    //               setState(() {});
+    //             },
+    //             icon: Icon(
+    //               Icons.delete,
+    //             ),
+    //           ),
+    //         ],
+    //       ),
+    //     ),
+    //   );
+    // });
+
+    return Scaffold(
+        appBar: AppBar(
+          title:const Text('List Screen'),
+          actions: [
+            IconButton(
+              onPressed: () {
+                _list.clear();
+                setState(() {});
+              },
+              icon: Icon(
+                Icons.delete,
+              ),
+            ),
+          ],
+        ),
+        body: ListView(
+          children: List.generate(50, (int index){
+            return Padding(
+              padding: const EdgeInsets.all(10),
+              child: Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Hello"),
+                    Text("Hi"),
+                    Text(index.toString()),
+                    IconButton(
+                      onPressed: () {
+                        // _list.removeAt(index);
+                        // _list.remove(_list[index]);
+                        setState(() {});
+                      },
+                      icon: Icon(
+                        Icons.delete,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }),
+        ),
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: Text('List Screen'),
@@ -44,7 +129,8 @@ class _ListScreenState extends State<ListScreen> {
                 children: [
                   Text(
                     _list[index].toString(),
-                  ), Text(
+                  ),
+                  Text(
                     _list.contains(9).toString(),
                   ),
                   IconButton(

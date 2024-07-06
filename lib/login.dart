@@ -1,5 +1,6 @@
 import 'package:batch730pm/home_screen.dart';
 import 'package:batch730pm/utils/common_snackbar.dart';
+import 'package:batch730pm/utils/const_colors.dart';
 import 'package:batch730pm/widgets/common_drawer.dart';
 import 'package:flutter/material.dart';
 
@@ -40,7 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.red,
+        backgroundColor: primaryColor,
         title: const Text('Login'),
       ),
       drawer: const CommonDrawer(),

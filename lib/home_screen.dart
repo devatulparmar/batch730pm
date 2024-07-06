@@ -19,11 +19,11 @@ class _HomeScreenState extends State<HomeScreen> {
         Center(
           child: ElevatedButton(
             onPressed: () {
-              MySnackBar.showMySnackBar(context: context, content: "Hello");
-              // Navigator.pushNamed(
-              //   context,
-              //   routeLogin,
-              // );
+              // MySnackBar.showMySnackBar(context: context, content: "Hello");
+              Navigator.pushNamed(
+                context,
+                routeLogin,
+              );
             },
             child: const Text('Login'),
           ),
@@ -50,7 +50,8 @@ class _HomeScreenState extends State<HomeScreen> {
             },
             child: const Text('Screen2'),
           ),
-        ),   const SizedBox(height: 15),
+        ),
+        const SizedBox(height: 15),
         Center(
           child: ElevatedButton(
             onPressed: () {
@@ -71,6 +72,29 @@ class _HomeScreenState extends State<HomeScreen> {
               // );
             },
             child: const Text('ListScreen'),
+          ),
+        ),
+        const SizedBox(height: 15),
+        Center(
+          child: ElevatedButton(
+            onPressed: () {
+              print('Clicked');
+
+              Navigator.pushNamed(
+                context,
+                gridViewScreen,
+              );
+
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (BuildContext c) {
+              //       return Screen2();
+              //     },
+              //   ),
+              // );
+            },
+            child: const Text('GridViewScreen'),
           ),
         ),
       ],
