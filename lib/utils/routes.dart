@@ -1,5 +1,6 @@
 import 'package:batch730pm/gridview.dart';
 import 'package:batch730pm/list.dart';
+import 'package:batch730pm/register_screen.dart';
 import 'package:batch730pm/utils/const.dart';
 import 'package:batch730pm/login.dart';
 import 'package:batch730pm/home_screen.dart';
@@ -15,6 +16,8 @@ class MyAppRouter {
         return MaterialPageRoute(builder: (_) => const Screen2());
       case routeLogin:
         return MaterialPageRoute(builder: (_) => const LoginScreen());
+      case routeRegister:
+        return MaterialPageRoute(builder: (_) => const RegisterScreen());
       case listScreen:
         return MaterialPageRoute(builder: (_) => const ListScreen());
       case gridViewScreen:

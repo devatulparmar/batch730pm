@@ -22,6 +22,19 @@ class _HomeScreenState extends State<HomeScreen> {
               // MySnackBar.showMySnackBar(context: context, content: "Hello");
               Navigator.pushNamed(
                 context,
+                routeRegister,
+              );
+            },
+            child: const Text('Register'),
+          ),
+        ),
+        const SizedBox(height: 15),
+        Center(
+          child: ElevatedButton(
+            onPressed: () {
+              // MySnackBar.showMySnackBar(context: context, content: "Hello");
+              Navigator.pushNamed(
+                context,
                 routeLogin,
               );
             },
