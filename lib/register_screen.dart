@@ -12,6 +12,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool isMaleSelected = false;
   bool isFemaleSelected = false;
 
+  bool isDancingChecked = false;
+  bool isReadingChecked = false;
+  bool isPaintingChecked = false;
+
+  String? dropDownValue;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,7 +111,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     groupValue: radioGroupValue,
                     activeColor: Colors.red,
                     title: const Text('Male'),
-                    subtitle: const Text('Male are always wrong.'),
+                    subtitle: const Text('All Males are not the same!.'),
                     selected: isMaleSelected,
                     selectedTileColor: Colors.blue.shade100,
                     shape: RoundedRectangleBorder(
@@ -141,6 +147,134 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ),
               ],
+            ),
+            const SizedBox(height: 20),
+            const Divider(
+              color: Colors.black,
+              height: 1,
+            ),
+            const SizedBox(height: 20),
+            const Text('Hobbies'),
+            Row(
+              children: [
+                // Checkbox(
+                //   value: isChecked,
+                //   activeColor: Colors.black,
+                //   shape: RoundedRectangleBorder(
+                //     borderRadius: BorderRadius.circular(35),
+                //   ),
+                //   checkColor: Colors.green,
+                //   onChanged: (bool? value) {
+                //     isChecked = value!;
+                //     setState(() {});
+                //   },
+                // ),
+                Flexible(
+                  flex: 1,
+                  child: CheckboxListTile(
+                    value: isDancingChecked,
+                    activeColor: Colors.black,
+                    // shape: RoundedRectangleBorder(
+                    //   borderRadius: BorderRadius.circular(35),
+                    // ),
+                    checkColor: Colors.green,
+                    // checkboxShape: RoundedRectangleBorder(
+                    //   borderRadius: BorderRadius.circular(35),
+                    // ),
+                    controlAffinity: ListTileControlAffinity.leading,
+                    title: const Text('Dancing'),
+                    onChanged: (bool? value) {
+                      isDancingChecked = value!;
+                      setState(() {});
+                    },
+                  ),
+                ),
+                Flexible(
+                  flex: 1,
+                  child: CheckboxListTile(
+                    value: isReadingChecked,
+                    activeColor: Colors.black,
+                    // shape: RoundedRectangleBorder(
+                    //   borderRadius: BorderRadius.circular(35),
+                    // ),
+                    checkColor: Colors.green,
+                    // checkboxShape: RoundedRectangleBorder(
+                    //   borderRadius: BorderRadius.circular(35),
+                    // ),
+                    controlAffinity: ListTileControlAffinity.leading,
+                    title: const Text('Reading'),
+                    onChanged: (bool? value) {
+                      isReadingChecked = value!;
+                      setState(() {});
+                    },
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Flexible(
+                  flex: 1,
+                  child: CheckboxListTile(
+                    value: isPaintingChecked,
+                    activeColor: Colors.black,
+                    // shape: RoundedRectangleBorder(
+                    //   borderRadius: BorderRadius.circular(35),
+                    // ),
+                    checkColor: Colors.green,
+                    // checkboxShape: RoundedRectangleBorder(
+                    //   borderRadius: BorderRadius.circular(35),
+                    // ),
+                    controlAffinity: ListTileControlAffinity.leading,
+                    title: const Text('Painting'),
+                    subtitle: const Text('I am an Artist.'),
+                    onChanged: (bool? value) {
+                      isPaintingChecked = value!;
+                      setState(() {});
+                    },
+                  ),
+                ),
+              ],
+            ),
+            Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black),
+                borderRadius: BorderRadius.circular(35),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: DropdownButton(
+                  value: dropDownValue,
+                  icon: const Icon(Icons.arrow_circle_down),
+                  elevation: 16,
+                  style: const TextStyle(color: Colors.deepPurple),
+                  underline: Container(),
+                  items: const [
+                    DropdownMenuItem(
+                      value: "Vadodara",
+                      child: Text('Vadodara City'),
+                    ),
+                    DropdownMenuItem(
+                      value: "Ahmedabad",
+                      child: Text('Ahmedabad City'),
+                    ),
+                    DropdownMenuItem(
+                      value: "Surat",
+                      child: Text('Surat City'),
+                    ),
+                    DropdownMenuItem(
+                      value: "Rajkot",
+                      child: Text('Rajkot City'),
+                    ),
+                  ],
+                  hint: const Text('Select City'),
+                  isExpanded: true,
+                  onChanged: (value) {
+                    dropDownValue = value!;
+                    setState(() {});
+                  },
+                ),
+              ),
             ),
           ],
         ),
