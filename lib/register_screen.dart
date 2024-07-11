@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -8,15 +9,35 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  DateTime currentDate = DateTime.now();
   int radioGroupValue = 0;
   bool isMaleSelected = false;
   bool isFemaleSelected = false;
-
   bool isDancingChecked = false;
   bool isReadingChecked = false;
   bool isPaintingChecked = false;
 
   String? dropDownValue;
+
+  final List<String> _dropDownListItems = [
+    "Vadodara",
+    "Surat",
+    "Ahmedabad",
+    "Rajkot",
+    "Mumbai",
+  ];
+
+  Future showDate() async {
+    var pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1970, 6, 10),
+      lastDate: DateTime.now(),
+    );
+
+    currentDate = pickedDate!;
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -149,10 +170,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ],
             ),
             const SizedBox(height: 20),
-            const Divider(
-              color: Colors.black,
-              height: 1,
-            ),
+            // const Divider(
+            //   color: Colors.black,
+            //   height: 1,
+            // ),
             const SizedBox(height: 20),
             const Text('Hobbies'),
             Row(
@@ -236,6 +257,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ],
             ),
+
+            ///Drop-Down
             Container(
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.black),
@@ -249,32 +272,49 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   elevation: 16,
                   style: const TextStyle(color: Colors.deepPurple),
                   underline: Container(),
-                  items: const [
-                    DropdownMenuItem(
-                      value: "Vadodara",
-                      child: Text('Vadodara City'),
-                    ),
-                    DropdownMenuItem(
-                      value: "Ahmedabad",
-                      child: Text('Ahmedabad City'),
-                    ),
-                    DropdownMenuItem(
-                      value: "Surat",
-                      child: Text('Surat City'),
-                    ),
-                    DropdownMenuItem(
-                      value: "Rajkot",
-                      child: Text('Rajkot City'),
-                    ),
-                  ],
+                  items: _dropDownListItems
+                      .map(
+                        (dynamic obj) {
+                          return DropdownMenuItem(
+                            value: obj,
+                            child: Text(obj),
+                          );
+                        },
+                      ).toList(),
                   hint: const Text('Select City'),
                   isExpanded: true,
                   onChanged: (value) {
-                    dropDownValue = value!;
+                    dropDownValue = value.toString();
                     setState(() {});
                   },
                 ),
               ),
+            ),
+            const SizedBox(height: 20),
+
+            ///Date Picker
+            Row(
+              children: [
+                Text(
+                    'Date of Birth: ${DateFormat.yMMMd().format(currentDate)}'),
+                IconButton(
+                  onPressed: () {
+                    /// open date picker
+                    showDate();
+                  },
+                  icon: const Icon(Icons.calendar_month),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            // const Divider(
+            //   color: Colors.black,
+            //   height: 1,
+            // ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {},
+              child: const Text('Register'),
             ),
           ],
         ),

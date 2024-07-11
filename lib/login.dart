@@ -79,38 +79,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   return null;
                 },
               ),
-
-              // const SizedBox(
-              //   height: 20,
-              // ),
-              // TextField(
-              //   controller: _emailController,
-              //   keyboardType: TextInputType.emailAddress,
-              //   textInputAction: TextInputAction.next,
-              //   onChanged: (String s){
-              //     emailText = s;
-              //    setState(() {});
-              //   },
-              //   // onSubmitted: (String s){
-              //   //   print('on submitted');
-              //   // },
-              //   // onEditingComplete: (){
-              //   //   print('Function called');
-              //   //   // FocusManager.instance.primaryFocus?.unfocus();
-              //   // },
-              //   decoration: InputDecoration(
-              //     border: OutlineInputBorder(
-              //       borderRadius: BorderRadius.circular(35),
-              //     ),
-              //     hintText: "Enter an Email",
-              //     label: const Text('This is label'),
-              //     prefixIcon: const Icon(
-              //       Icons.email,
-              //       color: Colors.red,
-              //     ),
-              //   ),
-              // ),
-
               const SizedBox(
                 height: 20,
               ),
@@ -164,7 +132,6 @@ class _LoginScreenState extends State<LoginScreen> {
               Text('Email : ${_emailController.text}'),
               const SizedBox(height: 20),
               Text('Password : ${_passwordController.text}'),
-
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
