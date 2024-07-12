@@ -1,3 +1,4 @@
+import 'package:batch730pm/utils/const.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -27,6 +28,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
     "Mumbai",
   ];
 
+  late TextEditingController _firstNameController;
+  late TextEditingController _lastNameController;
+
   Future showDate() async {
     var pickedDate = await showDatePicker(
       context: context,
@@ -40,6 +44,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _firstNameController = TextEditingController();
+    _lastNameController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -50,7 +68,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         child: Column(
           children: [
             TextFormField(
-              // controller: _emailController,
+              controller: _firstNameController,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(35),
@@ -75,7 +93,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ),
             const SizedBox(height: 20),
             TextFormField(
-              // controller: _emailController,
+              controller: _lastNameController,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(35),
@@ -313,7 +331,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
             // ),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  routeUserDetailsScreen,
+                  arguments: {
+                   "first_name" : _firstNameController.text,
+                    "last_name" : _lastNameController.text,
+                    "gender" : radioGroupValue == 1 ? "Male" : "Female",
+                    "dancing" :  isDancingChecked ? "Dancing" : "",
+                    "reading" : isReadingChecked ? "Reading" : "",
+                    "painting" : isPaintingChecked ? "Painting" : "",
+                    "city" : dropDownValue,
+                    "dob" :  DateFormat.yMMMd().format(currentDate).toString(),
+                  }
+                );
+              },
               child: const Text('Register'),
             ),
           ],
