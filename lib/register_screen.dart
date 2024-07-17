@@ -1,5 +1,9 @@
+import 'dart:io';
+
+import 'package:batch730pm/utils/assets.dart';
 import 'package:batch730pm/utils/const.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -10,6 +14,8 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  final ImagePicker picker = ImagePicker();
+  XFile? pickedImage;
   DateTime currentDate = DateTime.now();
   int radioGroupValue = 0;
   bool isMaleSelected = false;
@@ -17,6 +23,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool isDancingChecked = false;
   bool isReadingChecked = false;
   bool isPaintingChecked = false;
+  bool isTextVisible = true;
 
   String? dropDownValue;
 
@@ -65,8 +72,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(10),
-        child: Column(
+        child: ListView(
           children: [
+            pickedImage != null
+                ? CircleAvatar(
+                    radius: 100,
+                    backgroundColor: Colors.blue,
+                    backgroundImage: FileImage(File(pickedImage!.path)),
+                  )
+                : const CircleAvatar(
+                    radius: 100,
+                    backgroundColor: Colors.blue,
+                    backgroundImage: AssetImage(localImage),
+                  ),
+            ElevatedButton(
+              onPressed: () async {
+                pickedImage = await picker.pickImage(
+                  source: ImageSource.camera,
+                  imageQuality: 100,
+                );
+                setState(() {});
+              },
+              child: const Text('Pick Image'),
+            ),
+            const SizedBox(height: 20),
             TextFormField(
               controller: _firstNameController,
               decoration: InputDecoration(
@@ -290,15 +319,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   elevation: 16,
                   style: const TextStyle(color: Colors.deepPurple),
                   underline: Container(),
-                  items: _dropDownListItems
-                      .map(
-                        (dynamic obj) {
-                          return DropdownMenuItem(
-                            value: obj,
-                            child: Text(obj),
-                          );
-                        },
-                      ).toList(),
+                  items: _dropDownListItems.map(
+                    (dynamic obj) {
+                      return DropdownMenuItem(
+                        value: obj,
+                        child: Text(obj),
+                      );
+                    },
+                  ).toList(),
                   hint: const Text('Select City'),
                   isExpanded: true,
                   onChanged: (value) {
@@ -324,6 +352,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ],
             ),
+
+            Text('Year only: ${DateFormat.y().format(currentDate)}'),
+            Text('Year and month only: ${DateFormat.yM().format(currentDate)}'),
             const SizedBox(height: 20),
             // const Divider(
             //   color: Colors.black,
@@ -332,22 +363,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(
-                  context,
-                  routeUserDetailsScreen,
-                  arguments: {
-                   "first_name" : _firstNameController.text,
-                    "last_name" : _lastNameController.text,
-                    "gender" : radioGroupValue == 1 ? "Male" : "Female",
-                    "dancing" :  isDancingChecked ? "Dancing" : "",
-                    "reading" : isReadingChecked ? "Reading" : "",
-                    "painting" : isPaintingChecked ? "Painting" : "",
-                    "city" : dropDownValue,
-                    "dob" :  DateFormat.yMMMd().format(currentDate).toString(),
-                  }
-                );
+                Navigator.pushNamed(context, routeUserDetailsScreen,
+                    arguments: {
+                      "first_name": _firstNameController.text,
+                      "last_name": _lastNameController.text,
+                      "gender": radioGroupValue == 1 ? "Male" : "Female",
+                      "dancing": isDancingChecked ? "Dancing" : "",
+                      "reading": isReadingChecked ? "Reading" : "",
+                      "painting": isPaintingChecked ? "Painting" : "",
+                      "city": dropDownValue,
+                      "dob": DateFormat.yMMMd().format(currentDate).toString(),
+                    });
               },
               child: const Text('Register'),
+            ),
+            const SizedBox(height: 20),
+            Visibility(
+              visible: isTextVisible,
+              child: const Text('This Text will be hide'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                isTextVisible = !isTextVisible;
+                setState(() {});
+              },
+              child: const Text('Show / Hide'),
             ),
           ],
         ),

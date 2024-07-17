@@ -1,8 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.weltec.batch730pm">
+
+    <uses-permission android:name="android.permission.CAMERA" />
+
    <application
         android:label="batch730pm"
         android:name="${applicationName}"
+        android:requestLegacyExternalStorage="true"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

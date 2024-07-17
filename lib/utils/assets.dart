@@ -1,2 +1,2 @@
 
-const String localImage = "";
+const String localImage = "images/image1.jpg";
