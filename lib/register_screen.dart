@@ -16,6 +16,7 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   final ImagePicker picker = ImagePicker();
   XFile? pickedImage;
+  List<XFile> pickedMultipleImage = [];
   DateTime currentDate = DateTime.now();
   int radioGroupValue = 0;
   bool isMaleSelected = false;
@@ -47,6 +48,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
 
     currentDate = pickedDate!;
+    setState(() {});
+  }
+
+  Future selectImageFromGallery() async {
+    pickedImage = await picker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 100,
+    );
+    setState(() {});
+  }
+
+  Future selectImageFromCamera() async {
+    pickedImage = await picker.pickImage(
+      source: ImageSource.camera,
+      imageQuality: 100,
+      preferredCameraDevice: CameraDevice.rear,
+    );
+    setState(() {});
+  }
+
+  Future selectMultipleImageFromGallery() async {
+    pickedMultipleImage = await picker.pickMultiImage(
+      imageQuality: 100,
+    );
     setState(() {});
   }
 
@@ -85,13 +110,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     backgroundColor: Colors.blue,
                     backgroundImage: AssetImage(localImage),
                   ),
+            ListView.builder(
+                itemCount: pickedMultipleImage.length,
+                shrinkWrap: true,
+                // scrollDirection: Axis.horizontal,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (BuildContext context, int index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: CircleAvatar(
+                      radius: 80,
+                      backgroundColor: Colors.blue,
+                      backgroundImage: FileImage(
+                        File(pickedMultipleImage[index].path),
+                      ),
+                    ),
+                  );
+                }),
             ElevatedButton(
-              onPressed: () async {
-                pickedImage = await picker.pickImage(
-                  source: ImageSource.camera,
-                  imageQuality: 100,
-                );
-                setState(() {});
+              onPressed: () {
+                selectImageFromGallery();
               },
               child: const Text('Pick Image'),
             ),

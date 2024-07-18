@@ -115,6 +115,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       content: "Success",
                       backgroundColor: Colors.green,
                       context: context,
+                      snackBarAction: SnackBarAction(
+                        label: "",
+                        onPressed: (){},
+                      ),
                     );
                     // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                     //   content: Text('Success'),
