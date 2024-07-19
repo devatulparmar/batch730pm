@@ -100,10 +100,43 @@ class _RegisterScreenState extends State<RegisterScreen> {
         child: ListView(
           children: [
             pickedImage != null
-                ? CircleAvatar(
-                    radius: 100,
-                    backgroundColor: Colors.blue,
-                    backgroundImage: FileImage(File(pickedImage!.path)),
+                ? Container(
+                    decoration: BoxDecoration(
+                      gradient: SweepGradient(
+                        colors: [
+                          Colors.black,
+                          Colors.tealAccent,
+                        ],
+                        startAngle: 0.5,
+                        endAngle: 5.75,
+                        center: Alignment.topRight,
+                        // focal: Alignment.bottomLeft,
+                      )
+                    ),
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        CircleAvatar(
+                          radius: 100,
+                          backgroundColor: Colors.blue,
+                          backgroundImage: FileImage(File(pickedImage!.path)),
+                        ),
+                        Positioned(
+                          right: 100,
+                          bottom: 30,
+                          child: InkWell(
+                            onTap: () {
+                              selectImageFromGallery();
+                            },
+                            child: const CircleAvatar(
+                              radius: 20,
+                              backgroundColor: Colors.red,
+                              child: Icon(Icons.edit),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   )
                 : const CircleAvatar(
                     radius: 100,
@@ -127,12 +160,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   );
                 }),
-            ElevatedButton(
-              onPressed: () {
-                selectImageFromGallery();
-              },
-              child: const Text('Pick Image'),
-            ),
+            // ElevatedButton(
+            //   onPressed: () {
+            //     selectImageFromGallery();
+            //   },
+            //   child: const Text('Pick Image'),
+            // ),
             const SizedBox(height: 20),
             TextFormField(
               controller: _firstNameController,
