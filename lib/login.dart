@@ -1,6 +1,7 @@
 import 'package:batch730pm/home_screen.dart';
 import 'package:batch730pm/utils/common_snackbar.dart';
 import 'package:batch730pm/utils/const_colors.dart';
+import 'package:batch730pm/utils/ui_helper.dart';
 import 'package:batch730pm/widgets/common_drawer.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +16,8 @@ class _LoginScreenState extends State<LoginScreen> {
   bool isObscureText = true;
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
+  late TextEditingController _confirmPasswordController;
+  final FocusNode _confirmPassFocusNode = FocusNode();
   String emailText = '';
   final _formKey = GlobalKey<FormState>();
 
@@ -23,6 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
+    _confirmPasswordController = TextEditingController();
   }
 
   @override
@@ -30,11 +34,13 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    _confirmPasswordController.dispose();
   }
 
   _clearData() {
     _emailController.clear();
     _passwordController.clear();
+    _confirmPasswordController.clear();
   }
 
   @override
@@ -44,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
         backgroundColor: primaryColor,
         title: const Text('Login'),
       ),
-      drawer: const CommonDrawer(),
+      // drawer: const CommonDrawer(),
       body: Padding(
         padding: const EdgeInsets.all(10),
         child: Form(
@@ -53,10 +59,11 @@ class _LoginScreenState extends State<LoginScreen> {
           onChanged: () {
             Form.of(primaryFocus!.context!).save();
           },
-          child: Column(
+          child: ListView(
             children: [
               TextFormField(
                 controller: _emailController,
+                textInputAction: TextInputAction.next,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(35),
@@ -72,19 +79,18 @@ class _LoginScreenState extends State<LoginScreen> {
                   // This optional block of code can be used to run
                   // code when the user saves the form.
                 },
-                validator: (String? s) {
-                  if (s == null || s.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
+                validator: (String? obj) => UIHelper.emailValidation(obj!),
               ),
               const SizedBox(
                 height: 20,
               ),
-              TextField(
+              TextFormField(
                 controller: _passwordController,
                 obscureText: isObscureText,
+                textInputAction: TextInputAction.next,
+                onEditingComplete: (){
+                  _confirmPassFocusNode.requestFocus();
+                },
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(35),
@@ -106,6 +112,69 @@ class _LoginScreenState extends State<LoginScreen> {
                       borderSide:
                           const BorderSide(color: Colors.green, width: 2)),
                 ),
+                validator: (String? s) {
+                  if (s == null || s.isEmpty) {
+                    return 'Please enter password';
+                  } else if (!RegExp(r'^(?=.*?[A-Z])').hasMatch(s)) {
+                    return "Should contain at least one upper case";
+                  } else if (!RegExp(r'^(?=.*[a-z])').hasMatch(s)) {
+                    return "Should contain at least one lower case";
+                  } else if (!RegExp(r'^(?=.*?[0-9])').hasMatch(s)) {
+                    return "Should contain at least one digit";
+                  } else if (!RegExp(r'^(?=.*?[!@#\$&*~])').hasMatch(s)) {
+                    return "Should contain at least one Special character";
+                  } else if (!RegExp(r'^.{8,}').hasMatch(s)) {
+                    return "Must be at least 8 characters in length ";
+                  } else {
+                    return null;
+                  }
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextFormField(
+                controller: _confirmPasswordController,
+                obscureText: isObscureText,
+                focusNode: _confirmPassFocusNode,
+                textInputAction: TextInputAction.go,
+                onFieldSubmitted: (String s){
+                  if(_formKey.currentState!.validate()){
+                    _formKey.currentState!.save();
+                    /// API call
+                    print('onFieldSubmitted called');
+                  }
+                },
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(35),
+                  ),
+                  hintText: "Enter Confirm Password",
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        isObscureText = !isObscureText;
+                      });
+                    },
+                    icon: Icon(
+                      Icons.remove_red_eye_outlined,
+                      color: isObscureText ? Colors.grey : Colors.blue,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(35),
+                      borderSide:
+                          const BorderSide(color: Colors.green, width: 2)),
+                ),
+                validator: (String? s) {
+                  if (s == null || s.isEmpty) {
+                    return 'Please enter password';
+                  } else if (s != _passwordController.text) {
+                    return "Both password must be same!";
+                  } else {
+                    return null;
+                  }
+                },
               ),
               const SizedBox(height: 20),
               ElevatedButton(
@@ -117,7 +186,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       context: context,
                       snackBarAction: SnackBarAction(
                         label: "",
-                        onPressed: (){},
+                        onPressed: () {},
                       ),
                     );
                     // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -125,12 +194,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     //   backgroundColor: Colors.green,
                     //   padding: EdgeInsets.all(10),
                     // ));
-                  } else {
-
-                  }
+                  } else {}
                   setState(() {});
                 },
-                child: const Text('Click'),
+                child: const Text('Save'),
               ),
               const SizedBox(height: 20),
               Text('Email : ${_emailController.text}'),

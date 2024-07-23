@@ -89,6 +89,146 @@ class _RegisterScreenState extends State<RegisterScreen> {
     _lastNameController.dispose();
   }
 
+  Widget _profileImageWidget() {
+    return pickedImage != null
+        ? Stack(
+            alignment: Alignment.center,
+            children: [
+              CircleAvatar(
+                radius: 100,
+                backgroundColor: Colors.blue,
+                backgroundImage: FileImage(File(pickedImage!.path)),
+              ),
+              Positioned(
+                right: 100,
+                bottom: 30,
+                child: InkWell(
+                  onTap: () {
+                    selectImageFromGallery();
+                  },
+                  child: const CircleAvatar(
+                    radius: 20,
+                    backgroundColor: Colors.red,
+                    child: Icon(Icons.edit),
+                  ),
+                ),
+              ),
+            ],
+          )
+        : Stack(
+            alignment: Alignment.center,
+            children: [
+              const CircleAvatar(
+                radius: 100,
+                backgroundColor: Colors.blue,
+                backgroundImage: AssetImage(localImage),
+              ),
+              Positioned(
+                right: 100,
+                bottom: 30,
+                child: InkWell(
+                  onTap: () {
+                    selectImageFromGallery();
+                  },
+                  child: const CircleAvatar(
+                    radius: 20,
+                    backgroundColor: Colors.red,
+                    child: Icon(Icons.edit),
+                  ),
+                ),
+              ),
+            ],
+          );
+  }
+
+  Widget _hobbies(){
+    return Column(
+      children: [
+        Row(
+          children: [
+            // Checkbox(
+            //   value: isChecked,
+            //   activeColor: Colors.black,
+            //   shape: RoundedRectangleBorder(
+            //     borderRadius: BorderRadius.circular(35),
+            //   ),
+            //   checkColor: Colors.green,
+            //   onChanged: (bool? value) {
+            //     isChecked = value!;
+            //     setState(() {});
+            //   },
+            // ),
+            Flexible(
+              flex: 1,
+              child: CheckboxListTile(
+                value: isDancingChecked,
+                activeColor: Colors.black,
+                // shape: RoundedRectangleBorder(
+                //   borderRadius: BorderRadius.circular(35),
+                // ),
+                checkColor: Colors.green,
+                // checkboxShape: RoundedRectangleBorder(
+                //   borderRadius: BorderRadius.circular(35),
+                // ),
+                controlAffinity: ListTileControlAffinity.leading,
+                title: const Text('Dancing'),
+                onChanged: (bool? value) {
+                  isDancingChecked = value!;
+                  setState(() {});
+                },
+              ),
+            ),
+            Flexible(
+              flex: 1,
+              child: CheckboxListTile(
+                value: isReadingChecked,
+                activeColor: Colors.black,
+                // shape: RoundedRectangleBorder(
+                //   borderRadius: BorderRadius.circular(35),
+                // ),
+                checkColor: Colors.green,
+                // checkboxShape: RoundedRectangleBorder(
+                //   borderRadius: BorderRadius.circular(35),
+                // ),
+                controlAffinity: ListTileControlAffinity.leading,
+                title: const Text('Reading'),
+                onChanged: (bool? value) {
+                  isReadingChecked = value!;
+                  setState(() {});
+                },
+              ),
+            ),
+          ],
+        ),
+        Row(
+          children: [
+            Flexible(
+              flex: 1,
+              child: CheckboxListTile(
+                value: isPaintingChecked,
+                activeColor: Colors.black,
+                // shape: RoundedRectangleBorder(
+                //   borderRadius: BorderRadius.circular(35),
+                // ),
+                checkColor: Colors.green,
+                // checkboxShape: RoundedRectangleBorder(
+                //   borderRadius: BorderRadius.circular(35),
+                // ),
+                controlAffinity: ListTileControlAffinity.leading,
+                title: const Text('Painting'),
+                subtitle: const Text('I am an Artist.'),
+                onChanged: (bool? value) {
+                  isPaintingChecked = value!;
+                  setState(() {});
+                },
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,50 +239,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         padding: const EdgeInsets.all(10),
         child: ListView(
           children: [
-            pickedImage != null
-                ? Container(
-                    decoration: BoxDecoration(
-                      gradient: SweepGradient(
-                        colors: [
-                          Colors.black,
-                          Colors.tealAccent,
-                        ],
-                        startAngle: 0.5,
-                        endAngle: 5.75,
-                        center: Alignment.topRight,
-                        // focal: Alignment.bottomLeft,
-                      )
-                    ),
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        CircleAvatar(
-                          radius: 100,
-                          backgroundColor: Colors.blue,
-                          backgroundImage: FileImage(File(pickedImage!.path)),
-                        ),
-                        Positioned(
-                          right: 100,
-                          bottom: 30,
-                          child: InkWell(
-                            onTap: () {
-                              selectImageFromGallery();
-                            },
-                            child: const CircleAvatar(
-                              radius: 20,
-                              backgroundColor: Colors.red,
-                              child: Icon(Icons.edit),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                : const CircleAvatar(
-                    radius: 100,
-                    backgroundColor: Colors.blue,
-                    backgroundImage: AssetImage(localImage),
-                  ),
+            _profileImageWidget(),
             ListView.builder(
                 itemCount: pickedMultipleImage.length,
                 shrinkWrap: true,
@@ -160,12 +257,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   );
                 }),
-            // ElevatedButton(
-            //   onPressed: () {
-            //     selectImageFromGallery();
-            //   },
-            //   child: const Text('Pick Image'),
-            // ),
             const SizedBox(height: 20),
             TextFormField(
               controller: _firstNameController,
@@ -294,87 +385,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             // ),
             const SizedBox(height: 20),
             const Text('Hobbies'),
-            Row(
-              children: [
-                // Checkbox(
-                //   value: isChecked,
-                //   activeColor: Colors.black,
-                //   shape: RoundedRectangleBorder(
-                //     borderRadius: BorderRadius.circular(35),
-                //   ),
-                //   checkColor: Colors.green,
-                //   onChanged: (bool? value) {
-                //     isChecked = value!;
-                //     setState(() {});
-                //   },
-                // ),
-                Flexible(
-                  flex: 1,
-                  child: CheckboxListTile(
-                    value: isDancingChecked,
-                    activeColor: Colors.black,
-                    // shape: RoundedRectangleBorder(
-                    //   borderRadius: BorderRadius.circular(35),
-                    // ),
-                    checkColor: Colors.green,
-                    // checkboxShape: RoundedRectangleBorder(
-                    //   borderRadius: BorderRadius.circular(35),
-                    // ),
-                    controlAffinity: ListTileControlAffinity.leading,
-                    title: const Text('Dancing'),
-                    onChanged: (bool? value) {
-                      isDancingChecked = value!;
-                      setState(() {});
-                    },
-                  ),
-                ),
-                Flexible(
-                  flex: 1,
-                  child: CheckboxListTile(
-                    value: isReadingChecked,
-                    activeColor: Colors.black,
-                    // shape: RoundedRectangleBorder(
-                    //   borderRadius: BorderRadius.circular(35),
-                    // ),
-                    checkColor: Colors.green,
-                    // checkboxShape: RoundedRectangleBorder(
-                    //   borderRadius: BorderRadius.circular(35),
-                    // ),
-                    controlAffinity: ListTileControlAffinity.leading,
-                    title: const Text('Reading'),
-                    onChanged: (bool? value) {
-                      isReadingChecked = value!;
-                      setState(() {});
-                    },
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Flexible(
-                  flex: 1,
-                  child: CheckboxListTile(
-                    value: isPaintingChecked,
-                    activeColor: Colors.black,
-                    // shape: RoundedRectangleBorder(
-                    //   borderRadius: BorderRadius.circular(35),
-                    // ),
-                    checkColor: Colors.green,
-                    // checkboxShape: RoundedRectangleBorder(
-                    //   borderRadius: BorderRadius.circular(35),
-                    // ),
-                    controlAffinity: ListTileControlAffinity.leading,
-                    title: const Text('Painting'),
-                    subtitle: const Text('I am an Artist.'),
-                    onChanged: (bool? value) {
-                      isPaintingChecked = value!;
-                      setState(() {});
-                    },
-                  ),
-                ),
-              ],
-            ),
+            _hobbies(),
 
             ///Drop-Down
             Container(
