@@ -33,7 +33,7 @@ class _Screen2State extends State<Screen2> {
 
                 Navigator.pushNamedAndRemoveUntil(
                   context,
-                  "routeScreen3",
+                  "/",
                     (Route r) => false,
                 );
 

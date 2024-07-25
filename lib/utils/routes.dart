@@ -1,3 +1,4 @@
+import 'package:batch730pm/bottom_nav_screen.dart';
 import 'package:batch730pm/gridview.dart';
 import 'package:batch730pm/list.dart';
 import 'package:batch730pm/register_screen.dart';
@@ -12,7 +13,7 @@ class MyAppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/':
-        return MaterialPageRoute(builder: (_) => const HomeScreen());
+        return MaterialPageRoute(builder: (_) => const MyBottomNavScreen());
       case routeScreen2:
         return MaterialPageRoute(builder: (_) => const Screen2());
       case routeLogin:
