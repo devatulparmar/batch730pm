@@ -20,12 +20,27 @@ class MyAppRouter {
         return MaterialPageRoute(builder: (_) => const LoginScreen());
       case routeRegister:
         return MaterialPageRoute(builder: (_) => const RegisterScreen());
-      case listScreen:
+      case routeListScreen:
         return MaterialPageRoute(builder: (_) => const ListScreen());
-      case gridViewScreen:
+      case routeGridViewScreen:
         return MaterialPageRoute(builder: (_) => const GridViewScreen());
       case routeUserDetailsScreen:
         return MaterialPageRoute(builder: (_) => UserDetailsScreen(arguments: settings.arguments));
+      default:
+        return MaterialPageRoute(
+          builder: (_) => Scaffold(
+            body: Center(child: Text('No route defined for ${settings.name}')),
+          ),
+        );
+    }
+  }
+
+  static Route<dynamic> generateNestedRoute(RouteSettings settings) {
+    switch (settings.name) {
+      case '/':
+        return MaterialPageRoute(builder: (_) => const RegisterScreen());
+      case routeLogin:
+        return MaterialPageRoute(builder: (_) => const LoginScreen());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

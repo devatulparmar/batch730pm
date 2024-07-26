@@ -9,20 +9,31 @@ class Screen2 extends StatefulWidget {
   State<Screen2> createState() => _Screen2State();
 }
 
+void fn(){
+  Navigator.push(
+    globalNavigatorKey.currentContext!,
+    MaterialPageRoute(
+      builder: (BuildContext c) {
+        return const Screen3();
+      },
+    ),
+  );
+}
+
 class _Screen2State extends State<Screen2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.logout,
           ),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
-        title: Text('Screen 2'),
+        title: const Text('Screen 2'),
       ),
       body: Column(
         children: [
@@ -31,10 +42,10 @@ class _Screen2State extends State<Screen2> {
               onPressed: () {
                 print('Clicked');
 
-                Navigator.pushNamedAndRemoveUntil(
+                Navigator.pushNamed(
                   context,
-                  "/",
-                    (Route r) => false,
+                  routeRegister,
+                  // (Route r) => false,
                 );
 
                 // Navigator.pushReplacement(
@@ -46,18 +57,25 @@ class _Screen2State extends State<Screen2> {
                 //   ),
                 // );
 
-
-
+                //
                 // Navigator.push(
                 //   context,
                 //   MaterialPageRoute(
                 //     builder: (BuildContext c) {
-                //       return Screen3();
+                //       return const Screen3();
                 //     },
                 //   ),
                 // );
+                //
+                // Navigator.of(context).push(
+                //     MaterialPageRoute(
+                //       builder: (BuildContext c) {
+                //         return const Screen3();
+                //       },
+                //     ),
+                // );
               },
-              child: Text('Go to Screen 2'),
+              child: const Text('Go to Screen 2'),
             ),
           ),
         ],

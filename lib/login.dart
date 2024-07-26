@@ -183,7 +183,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     MySnackBar.showMySnackBar(
                       content: "Success",
                       backgroundColor: Colors.green,
-                      context: context,
                       snackBarAction: SnackBarAction(
                         label: "",
                         onPressed: () {},

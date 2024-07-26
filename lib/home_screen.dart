@@ -72,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
               Navigator.pushNamed(
                 context,
-                listScreen,
+                routeListScreen,
               );
 
               // Navigator.push(
@@ -95,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
               Navigator.pushNamed(
                 context,
-                gridViewScreen,
+                routeGridViewScreen,
               );
 
               // Navigator.push(

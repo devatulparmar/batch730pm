@@ -1,3 +1,4 @@
+import 'package:batch730pm/utils/const.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -356,6 +357,22 @@ class _SaleScreenState extends State<SaleScreen> {
                     ],
                   ),
                 ],
+              ),
+
+
+              Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    print('Clicked');
+
+                    /// Normal Navigation
+                    Navigator.pushNamed(
+                      context,
+                      routeGridViewScreen,
+                    );
+                  },
+                  child: const Text('Go to Screen 2'),
+                ),
               ),
             ],
           ),

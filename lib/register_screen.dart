@@ -471,6 +471,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
               },
               child: const Text('Show / Hide'),
             ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+
+                Navigator.pushNamed(context, routeLogin);
+              },
+              child: const Text('Login'),
+            ),
           ],
         ),
       ),
