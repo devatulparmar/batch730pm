@@ -116,13 +116,62 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Batch 7:30 PM'),
+    return SafeArea(
+      child: Scaffold(
+        body: ListView.builder(
+            itemCount: 15,
+            padding: const EdgeInsets.all(10),
+            itemBuilder: (BuildContext context, int index) {
+              return Card(
+                elevation: 10,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Column(
+                  children: [
+                    Container(
+                      height: 200,
+                      width: 600,
+                      decoration: const BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(15),
+                          topLeft: Radius.circular(15),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Title $index',
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                          const Icon(Icons.more_vert),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      child: Row(
+                        children: const [
+                          Text(
+                            'Sub Title',
+                            style: TextStyle(fontSize: 12),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+        ),
       ),
-      // endDrawer: const CommonDrawer(),
-      drawer: const CommonDrawer(),
-      body: _listviewWidget(context),
     );
   }
 }

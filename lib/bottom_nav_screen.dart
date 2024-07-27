@@ -1,7 +1,10 @@
+import 'package:batch730pm/home_screen.dart';
 import 'package:batch730pm/login.dart';
 import 'package:batch730pm/nested_screen.dart';
+import 'package:batch730pm/profile_screen.dart';
 import 'package:batch730pm/register_screen.dart';
 import 'package:batch730pm/sales_screen.dart';
+import 'package:batch730pm/user_details.dart';
 import 'package:flutter/material.dart';
 
 class MyBottomNavScreen extends StatefulWidget {
@@ -15,11 +18,11 @@ class _MyBottomNavScreenState extends State<MyBottomNavScreen> {
   int selectedIndex = 0;
 
   final List _list = [
+    const HomeScreen(),
     const NestedScreen(),
-    const LoginScreen(),
     const RegisterScreen(),
     const RegisterScreen(),
-    const SaleScreen()
+    const ProfileScreen(),
   ];
 
   @override
@@ -93,7 +96,7 @@ class _MyBottomNavScreenState extends State<MyBottomNavScreen> {
             label: '',
           ),
           NavigationDestination(
-            icon: Icon(Icons.favorite),
+            icon: Icon(Icons.notifications),
             label: '',
           ),
           NavigationDestination(
