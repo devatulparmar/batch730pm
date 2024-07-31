@@ -1,5 +1,6 @@
 import 'package:batch730pm/utils/const.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -9,6 +10,9 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  bool isLogin = false;
+  late SharedPreferences _preferences;
+
   void _simpleDialog() {
     showDialog(
       context: context,
@@ -114,6 +118,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               TextButton(
                 onPressed: () {
+                  _preferences.remove(prefIsLogin);
                   Navigator.pushNamedAndRemoveUntil(
                     context,
                     '/',
@@ -124,7 +129,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ],
           );
-        });
+        },
+    );
   }
 
   void _showOptions() {
@@ -149,7 +155,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   CloseButton(
-                    onPressed: (){
+                    onPressed: () {
                       Navigator.pop(context);
                     },
                   ),
@@ -178,6 +184,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
         );
       },
     );
+  }
+
+  void _initSharedPreferences() async {
+    _preferences = await SharedPreferences.getInstance();
+    isLogin = _preferences.getBool(prefIsLogin) ?? false;
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _initSharedPreferences();
   }
 
   @override
@@ -248,32 +266,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
           const SizedBox(height: 10),
-          Card(
-            child: ListTile(
-              leading: const Icon(Icons.login),
-              title: const Text('Login'),
-              trailing: const Icon(Icons.arrow_forward_ios),
-              onTap: () {
-                Navigator.pushNamed(
-                  context,
-                  routeLogin,
-                );
-              },
-            ),
-          ),
-          const SizedBox(height: 10),
-          Card(
-            child: ListTile(
-              leading: const Icon(Icons.logout),
-              title: const Text('Logout'),
-              trailing: const Icon(Icons.arrow_forward_ios),
-              onTap: () {
-                // _simpleDialog();
-                // _alertDialog();
-                _logoutDialog();
-              },
-            ),
-          ),
+          isLogin
+              ? Card(
+                  child: ListTile(
+                    leading: const Icon(Icons.logout),
+                    title: const Text('Logout'),
+                    trailing: const Icon(Icons.arrow_forward_ios),
+                    onTap: () {
+                      // _simpleDialog();
+                      // _alertDialog();
+                      _logoutDialog();
+                    },
+                  ),
+                )
+              : Card(
+                  child: ListTile(
+                    leading: const Icon(Icons.login),
+                    title: const Text('Login'),
+                    trailing: const Icon(Icons.arrow_forward_ios),
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        routeLogin,
+                      );
+                    },
+                  ),
+                ),
           const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),

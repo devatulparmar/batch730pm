@@ -1,9 +1,11 @@
 import 'package:batch730pm/home_screen.dart';
 import 'package:batch730pm/utils/common_snackbar.dart';
+import 'package:batch730pm/utils/const.dart';
 import 'package:batch730pm/utils/const_colors.dart';
 import 'package:batch730pm/utils/ui_helper.dart';
 import 'package:batch730pm/widgets/common_drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -14,6 +16,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool isObscureText = true;
+  late SharedPreferences _preferences;
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
   late TextEditingController _confirmPasswordController;
@@ -27,6 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
     _confirmPasswordController = TextEditingController();
+    _initSharedPreferences();
   }
 
   @override
@@ -41,6 +45,10 @@ class _LoginScreenState extends State<LoginScreen> {
     _emailController.clear();
     _passwordController.clear();
     _confirmPasswordController.clear();
+  }
+
+  void _initSharedPreferences() async {
+    _preferences = await SharedPreferences.getInstance();
   }
 
   @override
@@ -88,7 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 controller: _passwordController,
                 obscureText: isObscureText,
                 textInputAction: TextInputAction.next,
-                onEditingComplete: (){
+                onEditingComplete: () {
                   _confirmPassFocusNode.requestFocus();
                 },
                 decoration: InputDecoration(
@@ -112,74 +120,76 @@ class _LoginScreenState extends State<LoginScreen> {
                       borderSide:
                           const BorderSide(color: Colors.green, width: 2)),
                 ),
-                validator: (String? s) {
-                  if (s == null || s.isEmpty) {
-                    return 'Please enter password';
-                  } else if (!RegExp(r'^(?=.*?[A-Z])').hasMatch(s)) {
-                    return "Should contain at least one upper case";
-                  } else if (!RegExp(r'^(?=.*[a-z])').hasMatch(s)) {
-                    return "Should contain at least one lower case";
-                  } else if (!RegExp(r'^(?=.*?[0-9])').hasMatch(s)) {
-                    return "Should contain at least one digit";
-                  } else if (!RegExp(r'^(?=.*?[!@#\$&*~])').hasMatch(s)) {
-                    return "Should contain at least one Special character";
-                  } else if (!RegExp(r'^.{8,}').hasMatch(s)) {
-                    return "Must be at least 8 characters in length ";
-                  } else {
-                    return null;
-                  }
-                },
+                // validator: (String? s) {
+                //   if (s == null || s.isEmpty) {
+                //     return 'Please enter password';
+                //   } else if (!RegExp(r'^(?=.*?[A-Z])').hasMatch(s)) {
+                //     return "Should contain at least one upper case";
+                //   } else if (!RegExp(r'^(?=.*[a-z])').hasMatch(s)) {
+                //     return "Should contain at least one lower case";
+                //   } else if (!RegExp(r'^(?=.*?[0-9])').hasMatch(s)) {
+                //     return "Should contain at least one digit";
+                //   } else if (!RegExp(r'^(?=.*?[!@#\$&*~])').hasMatch(s)) {
+                //     return "Should contain at least one Special character";
+                //   } else if (!RegExp(r'^.{8,}').hasMatch(s)) {
+                //     return "Must be at least 8 characters in length ";
+                //   } else {
+                //     return null;
+                //   }
+                // },
               ),
               const SizedBox(
                 height: 20,
               ),
-              TextFormField(
-                controller: _confirmPasswordController,
-                obscureText: isObscureText,
-                focusNode: _confirmPassFocusNode,
-                textInputAction: TextInputAction.go,
-                onFieldSubmitted: (String s){
-                  if(_formKey.currentState!.validate()){
-                    _formKey.currentState!.save();
-                    /// API call
-                    print('onFieldSubmitted called');
-                  }
-                },
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(35),
-                  ),
-                  hintText: "Enter Confirm Password",
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        isObscureText = !isObscureText;
-                      });
-                    },
-                    icon: Icon(
-                      Icons.remove_red_eye_outlined,
-                      color: isObscureText ? Colors.grey : Colors.blue,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(35),
-                      borderSide:
-                          const BorderSide(color: Colors.green, width: 2)),
-                ),
-                validator: (String? s) {
-                  if (s == null || s.isEmpty) {
-                    return 'Please enter password';
-                  } else if (s != _passwordController.text) {
-                    return "Both password must be same!";
-                  } else {
-                    return null;
-                  }
-                },
-              ),
-              const SizedBox(height: 20),
+              // TextFormField(
+              //   controller: _confirmPasswordController,
+              //   obscureText: isObscureText,
+              //   focusNode: _confirmPassFocusNode,
+              //   textInputAction: TextInputAction.go,
+              //   onFieldSubmitted: (String s){
+              //     if(_formKey.currentState!.validate()){
+              //       _formKey.currentState!.save();
+              //       /// API call
+              //       print('onFieldSubmitted called');
+              //     }
+              //   },
+              //   decoration: InputDecoration(
+              //     border: OutlineInputBorder(
+              //       borderRadius: BorderRadius.circular(35),
+              //     ),
+              //     hintText: "Enter Confirm Password",
+              //     suffixIcon: IconButton(
+              //       onPressed: () {
+              //         setState(() {
+              //           isObscureText = !isObscureText;
+              //         });
+              //       },
+              //       icon: Icon(
+              //         Icons.remove_red_eye_outlined,
+              //         color: isObscureText ? Colors.grey : Colors.blue,
+              //       ),
+              //     ),
+              //     focusedBorder: OutlineInputBorder(
+              //         borderRadius: BorderRadius.circular(35),
+              //         borderSide:
+              //             const BorderSide(color: Colors.green, width: 2)),
+              //   ),
+              //   validator: (String? s) {
+              //     if (s == null || s.isEmpty) {
+              //       return 'Please enter password';
+              //     } else if (s != _passwordController.text) {
+              //       return "Both password must be same!";
+              //     } else {
+              //       return null;
+              //     }
+              //   },
+              // ),
+              // const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate() == true) {
+                onPressed: () async {
+                  if (_formKey.currentState!.validate() == true)  {
+                    _preferences.setBool(prefIsLogin, true);
+
                     MySnackBar.showMySnackBar(
                       content: "Success",
                       backgroundColor: Colors.green,
@@ -188,20 +198,16 @@ class _LoginScreenState extends State<LoginScreen> {
                         onPressed: () {},
                       ),
                     );
-                    // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    //   content: Text('Success'),
-                    //   backgroundColor: Colors.green,
-                    //   padding: EdgeInsets.all(10),
-                    // ));
-                  } else {}
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      "/",
+                      (Route r) => false,
+                    );
+                  }
                   setState(() {});
                 },
-                child: const Text('Save'),
+                child: const Text('Login'),
               ),
-              const SizedBox(height: 20),
-              Text('Email : ${_emailController.text}'),
-              const SizedBox(height: 20),
-              Text('Password : ${_passwordController.text}'),
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {

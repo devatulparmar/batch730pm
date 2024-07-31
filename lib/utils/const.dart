@@ -12,3 +12,5 @@ const String routeUserDetailsScreen = "/UserDetailsScreen";
 
 final GlobalKey<NavigatorState> globalNavigatorKey = GlobalKey<NavigatorState>();
 final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
+
+const String prefIsLogin = 'isLogin';
