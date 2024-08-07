@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:batch730pm/utils/common_snackbar.dart';
 import 'package:batch730pm/utils/const.dart';
 import 'package:batch730pm/login.dart';
 import 'package:batch730pm/screen2.dart';
 import 'package:batch730pm/widgets/common_drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -13,6 +17,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List _list = [];
   ListView _listviewWidget(BuildContext context) {
     return ListView(
       children: [
@@ -112,6 +117,22 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ],
     );
+  }
+
+  Future _getData() async {
+    Response response = await http.get(Uri.parse('https://reqres.in/api/unknown'));
+
+    if(response.statusCode == 200){
+      print(response.body);
+    } else{
+      print(response.statusCode);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getData();
   }
 
   @override
