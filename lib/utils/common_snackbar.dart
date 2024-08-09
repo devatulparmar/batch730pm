@@ -19,7 +19,7 @@ class MySnackBar {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(35),
         ),
-        duration: const Duration(seconds: 3),
+        duration: const Duration(seconds: 10),
         dismissDirection: DismissDirection.none,
       ),
     );

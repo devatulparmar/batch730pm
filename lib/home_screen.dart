@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:batch730pm/model/users_model.dart';
 import 'package:batch730pm/utils/common_snackbar.dart';
 import 'package:batch730pm/utils/const.dart';
 import 'package:batch730pm/login.dart';
@@ -17,7 +19,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List _list = [];
+  List tempList = [];
+  List<UserData> _userList = [];
   ListView _listviewWidget(BuildContext context) {
     return ListView(
       children: [
@@ -120,11 +123,16 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future _getData() async {
-    Response response = await http.get(Uri.parse('https://reqres.in/api/unknown'));
+    Response response = await http.get(
+      Uri.parse('https://reqres.in/api/users'),
+    );
 
-    if(response.statusCode == 200){
-      print(response.body);
-    } else{
+    if (response.statusCode == 200) {
+      var decodedData = jsonDecode(response.body);
+      tempList = decodedData['data'] as List;
+      _userList = tempList.map((dynamic obj) => UserData.fromJson(obj)).toList();
+      setState(() {});
+    } else {
       print(response.statusCode);
     }
   }
@@ -140,57 +148,57 @@ class _HomeScreenState extends State<HomeScreen> {
     return SafeArea(
       child: Scaffold(
         body: ListView.builder(
-            itemCount: 15,
-            padding: const EdgeInsets.all(10),
-            itemBuilder: (BuildContext context, int index) {
-              return Card(
-                elevation: 10,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Column(
-                  children: [
-                    Container(
-                      height: 200,
-                      width: 600,
-                      decoration: const BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(15),
-                          topLeft: Radius.circular(15),
+          itemCount: _userList.length,
+          padding: const EdgeInsets.all(10),
+          itemBuilder: (BuildContext context, int index) {
+            return Card(
+              elevation: 10,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Column(
+                children: [
+                  Container(
+                    height: 200,
+                    width: 600,
+                    decoration: const BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(15),
+                        topLeft: Radius.circular(15),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Fist Name: ${_userList[index].firstName}',
+                          style: const TextStyle(fontSize: 16),
                         ),
-                      ),
+                        const Icon(Icons.more_vert),
+                      ],
                     ),
-                    Padding(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Title $index',
-                            style: const TextStyle(fontSize: 16),
-                          ),
-                          const Icon(Icons.more_vert),
-                        ],
-                      ),
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    child: Row(
+                      children: const [
+                        Text(
+                          'Sub Title',
+                          style: TextStyle(fontSize: 12),
+                        ),
+                      ],
                     ),
-                    Padding(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                      child: Row(
-                        children: const [
-                          Text(
-                            'Sub Title',
-                            style: TextStyle(fontSize: 12),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            },
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );
