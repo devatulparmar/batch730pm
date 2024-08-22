@@ -15,3 +15,4 @@ final GlobalKey<NavigatorState> globalNavigatorKey = GlobalKey<NavigatorState>()
 final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
 
 const String prefIsLogin = 'isLogin';
+const String prefAuthToken = 'authToken';
