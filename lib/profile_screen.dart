@@ -217,81 +217,81 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             const SizedBox(height: 20),
 
-             ListView.builder(
-               itemCount: 5,
-               shrinkWrap: true,
-               physics: const NeverScrollableScrollPhysics(),
-               itemBuilder: (BuildContext context, int index){
-                 return Padding(
-                   padding: const EdgeInsets.all(10),
-                   child: Card(
-                     elevation: 10,
-                     child: ListTile(
-                       title: Text('Item $index'),
-                       tileColor: _selectedIndex == index ? Colors.pink.shade200 : Colors.white,
-                       onTap: () {
-                         setState(() {
-                           _selectedIndex = index; // Update the selected index
-                         });
-                       },
-                     ),
-                   ),
-                 );
-               },
-             ),
+             // ListView.builder(
+             //   itemCount: 5,
+             //   shrinkWrap: true,
+             //   physics: const NeverScrollableScrollPhysics(),
+             //   itemBuilder: (BuildContext context, int index){
+             //     return Padding(
+             //       padding: const EdgeInsets.all(10),
+             //       child: Card(
+             //         elevation: 10,
+             //         child: ListTile(
+             //           title: Text('Item $index'),
+             //           tileColor: _selectedIndex == index ? Colors.pink.shade200 : Colors.white,
+             //           onTap: () {
+             //             setState(() {
+             //               _selectedIndex = index; // Update the selected index
+             //             });
+             //           },
+             //         ),
+             //       ),
+             //     );
+             //   },
+             // ),
 
              MyListItem(
               iconData: Icons.person,
               title: 'Edit Profile',
               isSelected: isSelectedItem,
             ),
-            // const SizedBox(height: 10),
-            //  MyListItem(
-            //   iconData: Icons.privacy_tip,
-            //   title: 'Privacy Policy',
-            //   isSelected: isSelectedItem,
-            // ),
-            // const SizedBox(height: 10),
-            // MyListItem(
-            //   iconData: Icons.info,
-            //   title: 'About us',
-            //   isSelected: isSelectedItem,
-            //   onTap: () => _aboutDialog(),
-            // ),
-            // const SizedBox(height: 10),
-            //  MyListItem(
-            //   iconData: Icons.feedback,
-            //   title: 'Send Feedback',
-            //   isSelected: isSelectedItem,
-            // ),
-            // const SizedBox(height: 10),
-            // MyListItem(
-            //   iconData: Icons.help,
-            //   title: 'Help and Support',
-            //   isSelected: isSelectedItem,
-            //   onTap: () => _showOptions(),
-            // ),
-            // const SizedBox(height: 10),
-            // MyListItem(
-            //   iconData: Icons.travel_explore,
-            //   title: 'Travel Screen',
-            //   isSelected: isSelectedItem,
-            //   onTap: () => Navigator.pushNamed(context, routeTravelScreen),
-            // ),
-            // const SizedBox(height: 10),
-            // isLogin
-            //     ? MyListItem(
-            //         iconData: Icons.logout,
-            //         title: 'Logout',
-            //         isSelected: isSelectedItem,
-            //         onTap: () => _logoutDialog(),
-            //       )
-            //     : MyListItem(
-            //         iconData: Icons.login,
-            //         title: 'Login',
-            //         isSelected: isSelectedItem,
-            //         onTap: () => Navigator.pushNamed(context, routeLogin),
-            //       ),
+            const SizedBox(height: 10),
+             MyListItem(
+              iconData: Icons.privacy_tip,
+              title: 'Privacy Policy',
+              isSelected: isSelectedItem,
+            ),
+            const SizedBox(height: 10),
+            MyListItem(
+              iconData: Icons.info,
+              title: 'About us',
+              isSelected: isSelectedItem,
+              onTap: () => _aboutDialog(),
+            ),
+            const SizedBox(height: 10),
+             MyListItem(
+              iconData: Icons.feedback,
+              title: 'Send Feedback',
+              isSelected: isSelectedItem,
+            ),
+            const SizedBox(height: 10),
+            MyListItem(
+              iconData: Icons.help,
+              title: 'Help and Support',
+              isSelected: isSelectedItem,
+              onTap: () => _showOptions(),
+            ),
+            const SizedBox(height: 10),
+            MyListItem(
+              iconData: Icons.travel_explore,
+              title: 'Travel Screen',
+              isSelected: isSelectedItem,
+              onTap: () => Navigator.pushNamed(context, routeTravelScreen),
+            ),
+            const SizedBox(height: 10),
+            isLogin
+                ? MyListItem(
+                    iconData: Icons.logout,
+                    title: 'Logout',
+                    isSelected: isSelectedItem,
+                    onTap: () => _logoutDialog(),
+                  )
+                : MyListItem(
+                    iconData: Icons.login,
+                    title: 'Login',
+                    isSelected: isSelectedItem,
+                    onTap: () => Navigator.pushNamed(context, routeLogin),
+                  ),
             const SizedBox(height: 10),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 10),

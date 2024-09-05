@@ -1,8 +1,9 @@
 import 'dart:convert';
 
 import 'package:batch730pm/home_screen.dart';
-import 'package:http/http.dart' as http;
-import 'package:http/http.dart';
+import 'package:batch730pm/repository/api_repository.dart';
+import 'package:dio/dio.dart';
+// import 'package:http/http.dart';
 import 'package:batch730pm/utils/common_snackbar.dart';
 import 'package:batch730pm/utils/const.dart';
 import 'package:batch730pm/utils/const_colors.dart';
@@ -31,25 +32,45 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future _loginAPI() async {
     setState(() => isLoading = true);
-    Response response = await http.post(
-      Uri.parse('https://reqres.in/api/login'),
-      body: {
-        // "email": _emailController.text,
-        // "password": _passwordController.text,
 
+    var response = ApiRepository().postDioRequest(
+        'https://reqres.in/api/login',
+      data: {
         "email": "eve.holt@reqres.in",
         "password": "cityslicka"
       },
-      // headers: {
-      //   'Authorization': 'Bearer QpwL5tke4Pnpja7X4',
-      //   'Content-Type': 'application/json',
-      // },
     );
 
-    if (response.statusCode == 200) {
+    // var response = await ApiRepository().postAPIRequest(
+    //   'https://reqres.in/api/login',
+    //   body: {
+    //     // "email": _emailController.text,
+    //     // "password": _passwordController.text,
+    //
+    //     "email": "eve.holt@reqres.in",
+    //     "password": "cityslicka"
+    //   },
+    // ) as Response;
+
+    // Response response = await http.post(
+    //   Uri.parse('https://reqres.in/api/login'),
+    //   body: {
+    //     // "email": _emailController.text,
+    //     // "password": _passwordController.text,
+    //
+    //     "email": "eve.holt@reqres.in",
+    //     "password": "cityslicka"
+    //   },
+    //   // headers: {
+    //   //   'Authorization': 'Bearer QpwL5tke4Pnpja7X4',
+    //   //   'Content-Type': 'application/json',
+    //   // },
+    // );
+
+    if (response.hashCode == 200) {
       setState(() => isLoading = false);
 
-      var decodedData = jsonDecode(response.body);
+      var decodedData = jsonDecode(response.data);
 
       _preferences.setString(prefAuthToken, decodedData['token']);
       _preferences.setBool(prefIsLogin, true);
@@ -70,7 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
     } else {
       setState(() => isLoading = false);
 
-      var decodedData = jsonDecode(response.body);
+      var decodedData = jsonDecode(response.data);
       MySnackBar.showMySnackBar(content: decodedData['error']);
     }
   }
@@ -240,10 +261,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   // const SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () async {
-                      if (_formKey.currentState!.validate() == true) {
-                        _loginAPI();
-                      }
-                      setState(() {});
+                      _loginAPI();
+                      // if (_formKey.currentState!.validate() == true) {
+                      //   _loginAPI();
+                      // }
+                      // setState(() {});
                     },
                     child: const Text('Login'),
                   ),

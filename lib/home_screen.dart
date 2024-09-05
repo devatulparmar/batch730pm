@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:batch730pm/model/users_model.dart';
+import 'package:batch730pm/repository/api_repository.dart';
 import 'package:batch730pm/utils/common_snackbar.dart';
 import 'package:batch730pm/utils/const.dart';
 import 'package:batch730pm/login.dart';
@@ -123,9 +124,10 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future _getData() async {
-    Response response = await http.get(
-      Uri.parse('https://reqres.in/api/users'),
-    );
+    var response = await ApiRepository().getAPIRequest('https://reqres.in/api/users') as Response;
+    // Response response = await http.get(
+    //   Uri.parse('https://reqres.in/api/users'),
+    // );
 
     if (response.statusCode == 200) {
       var decodedData = jsonDecode(response.body);
