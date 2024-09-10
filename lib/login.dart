@@ -1,14 +1,10 @@
 import 'dart:convert';
 
-import 'package:batch730pm/home_screen.dart';
 import 'package:batch730pm/repository/api_repository.dart';
-import 'package:dio/dio.dart';
-// import 'package:http/http.dart';
 import 'package:batch730pm/utils/common_snackbar.dart';
 import 'package:batch730pm/utils/const.dart';
 import 'package:batch730pm/utils/const_colors.dart';
 import 'package:batch730pm/utils/ui_helper.dart';
-import 'package:batch730pm/widgets/common_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
