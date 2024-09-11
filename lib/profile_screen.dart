@@ -1,6 +1,8 @@
+import 'package:batch730pm/utils/common_snackbar.dart';
 import 'package:batch730pm/utils/const.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -194,6 +196,78 @@ class _ProfileScreenState extends State<ProfileScreen> {
     setState(() {});
   }
 
+  Future _launchWebURL() async {
+    var url = Uri.parse('https://flutter.dev/');
+    try {
+      if (await canLaunchUrl(url)) {
+        await launchUrl(url, mode: LaunchMode.inAppWebView);
+      }
+    } catch (e) {
+      MySnackBar.showMySnackBar(
+        content: 'Could not launch $url',
+        backgroundColor: Colors.red,
+      );
+    }
+  }
+
+  Future _launchPhone(String number) async {
+    var phone = Uri(scheme: 'tel', path: '+91$number');
+    try {
+      await launchUrl(phone);
+    } catch (e) {
+      MySnackBar.showMySnackBar(
+        content: 'Could not launch $phone',
+        backgroundColor: Colors.red,
+      );
+    }
+  }
+
+  String? _encodeQueryParameters(Map<String, String> params) {
+    return params.entries
+        .map((MapEntry e) =>
+            '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+        .join('&');
+  }
+
+  Future _launchEmail(String email) async {
+    var emailAddress = Uri(
+      scheme: 'mailto',
+      path: email,
+      query: _encodeQueryParameters(
+        {
+          'subject': 'this is subject',
+          'body': 'This is body part of an email.',
+        },
+      ),
+    );
+    try {
+      await launchUrl(emailAddress);
+    } catch (e) {
+      MySnackBar.showMySnackBar(
+        content: 'Could not launch $emailAddress',
+        backgroundColor: Colors.red,
+      );
+    }
+  }
+
+  Future _launchSMS(String sms) async {
+    var number = Uri(
+      scheme: 'sms',
+      path: '+91$sms',
+      queryParameters: {
+        'body': 'This is SMS Body',
+      },
+    );
+    try {
+      await launchUrl(number);
+    } catch (e) {
+      MySnackBar.showMySnackBar(
+        content: 'Could not launch $number',
+        backgroundColor: Colors.red,
+      );
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -217,39 +291,69 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             const SizedBox(height: 20),
 
-             // ListView.builder(
-             //   itemCount: 5,
-             //   shrinkWrap: true,
-             //   physics: const NeverScrollableScrollPhysics(),
-             //   itemBuilder: (BuildContext context, int index){
-             //     return Padding(
-             //       padding: const EdgeInsets.all(10),
-             //       child: Card(
-             //         elevation: 10,
-             //         child: ListTile(
-             //           title: Text('Item $index'),
-             //           tileColor: _selectedIndex == index ? Colors.pink.shade200 : Colors.white,
-             //           onTap: () {
-             //             setState(() {
-             //               _selectedIndex = index; // Update the selected index
-             //             });
-             //           },
-             //         ),
-             //       ),
-             //     );
-             //   },
-             // ),
+            // ListView.builder(
+            //   itemCount: 5,
+            //   shrinkWrap: true,
+            //   physics: const NeverScrollableScrollPhysics(),
+            //   itemBuilder: (BuildContext context, int index){
+            //     return Padding(
+            //       padding: const EdgeInsets.all(10),
+            //       child: Card(
+            //         elevation: 10,
+            //         child: ListTile(
+            //           title: Text('Item $index'),
+            //           tileColor: _selectedIndex == index ? Colors.pink.shade200 : Colors.white,
+            //           onTap: () {
+            //             setState(() {
+            //               _selectedIndex = index; // Update the selected index
+            //             });
+            //           },
+            //         ),
+            //       ),
+            //     );
+            //   },
+            // ),
 
-             MyListItem(
+            MyListItem(
               iconData: Icons.person,
               title: 'Edit Profile',
               isSelected: isSelectedItem,
             ),
             const SizedBox(height: 10),
-             MyListItem(
+            MyListItem(
               iconData: Icons.privacy_tip,
               title: 'Privacy Policy',
               isSelected: isSelectedItem,
+              onTap: () {
+                _launchWebURL();
+              },
+            ),
+            const SizedBox(height: 10),
+            MyListItem(
+              iconData: Icons.privacy_tip,
+              title: 'Contact Us',
+              isSelected: isSelectedItem,
+              onTap: () {
+                _launchPhone('1234567890');
+              },
+            ),
+            const SizedBox(height: 10),
+            MyListItem(
+              iconData: Icons.privacy_tip,
+              title: 'Email Us',
+              isSelected: isSelectedItem,
+              onTap: () {
+                _launchEmail('info@mayursoftware.in');
+              },
+            ),
+            const SizedBox(height: 10),
+            MyListItem(
+              iconData: Icons.privacy_tip,
+              title: 'SMS Us',
+              isSelected: isSelectedItem,
+              onTap: () {
+                _launchSMS('1234567890');
+              },
             ),
             const SizedBox(height: 10),
             MyListItem(
@@ -259,7 +363,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               onTap: () => _aboutDialog(),
             ),
             const SizedBox(height: 10),
-             MyListItem(
+            MyListItem(
               iconData: Icons.feedback,
               title: 'Send Feedback',
               isSelected: isSelectedItem,
