@@ -278,14 +278,15 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ),
-          isLoading
-              ? Container(
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width,
-                  color: Colors.black12,
-                  child: const Center(child: CircularProgressIndicator()),
-                )
-              : Container()
+          Visibility(
+            visible: isLoading,
+            child: Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              color: Colors.black12,
+              child: const Center(child: CircularProgressIndicator()),
+            ),
+          ),
         ],
       ),
     );

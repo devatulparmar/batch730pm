@@ -315,6 +315,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
             // ),
 
             MyListItem(
+              iconData: Icons.location_on,
+              title: 'Location Screen',
+              isSelected: isSelectedItem,
+              onTap: (){
+                Navigator.pushNamed(context, routeLocationScreen);
+              },
+            ),
+            const SizedBox(height: 10),
+            MyListItem(
               iconData: Icons.person,
               title: 'Edit Profile',
               isSelected: isSelectedItem,
@@ -418,6 +427,7 @@ class MyListItem extends StatelessWidget {
   final IconData iconData;
   final String title;
   final void Function()? onTap;
+
   const MyListItem(
       {Key? key,
       this.isVisible,
