@@ -1,4 +1,5 @@
 import 'package:batch730pm/bottom_nav_screen.dart';
+import 'package:batch730pm/employee_list.dart';
 import 'package:batch730pm/gridview.dart';
 import 'package:batch730pm/list.dart';
 import 'package:batch730pm/location_screen.dart';
@@ -30,6 +31,8 @@ class MyAppRouter {
         return MaterialPageRoute(builder: (_) => const TravelScreen());
       case routeLocationScreen:
         return MaterialPageRoute(builder: (_) => const LocationScreen());
+      case routeEmployeeListScreen:
+        return MaterialPageRoute(builder: (_) => const EmployeeListScreen());
       case routeUserDetailsScreen:
         return MaterialPageRoute(builder: (_) => UserDetailsScreen(arguments: settings.arguments));
       default:

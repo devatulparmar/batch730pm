@@ -315,6 +315,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
             // ),
 
             MyListItem(
+              iconData: Icons.list,
+              title: 'Employee List Screen',
+              isSelected: isSelectedItem,
+              onTap: (){
+                Navigator.pushNamed(context, routeEmployeeListScreen);
+              },
+            ),
+            const SizedBox(height: 10),
+            MyListItem(
               iconData: Icons.location_on,
               title: 'Location Screen',
               isSelected: isSelectedItem,
