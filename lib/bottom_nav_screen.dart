@@ -112,6 +112,14 @@ class _MyBottomNavScreenState extends State<MyBottomNavScreen> {
           });
         },
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: (){
+          print('clicked');
+        },
+        icon:const Icon(Icons.add),
+        label: const Text('Add New Task'),
+      ),
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:batch730pm/SegmentedButtonScreen.dart';
 import 'package:batch730pm/bottom_nav_screen.dart';
 import 'package:batch730pm/employee_list.dart';
 import 'package:batch730pm/gridview.dart';
@@ -33,6 +34,8 @@ class MyAppRouter {
         return MaterialPageRoute(builder: (_) => const LocationScreen());
       case routeEmployeeListScreen:
         return MaterialPageRoute(builder: (_) => const EmployeeListScreen());
+      case routeMySegmentedButtonScreen:
+        return MaterialPageRoute(builder: (_) => const MySegmentedButtonScreen());
       case routeUserDetailsScreen:
         return MaterialPageRoute(builder: (_) => UserDetailsScreen(arguments: settings.arguments));
       default:

@@ -315,6 +315,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
             // ),
 
             MyListItem(
+              iconData: Icons.select_all,
+              title: 'Segmented Button Screen',
+              isSelected: isSelectedItem,
+              onTap: (){
+                Navigator.pushNamed(context, routeMySegmentedButtonScreen);
+              },
+            ),
+            const SizedBox(height: 10),
+            MyListItem(
               iconData: Icons.list,
               title: 'Employee List Screen',
               isSelected: isSelectedItem,
