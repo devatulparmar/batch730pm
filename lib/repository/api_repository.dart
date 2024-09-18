@@ -10,7 +10,7 @@ class ApiRepository {
     return await dio.get(url);
   }
 
-  postDioRequest(
+  Future<Response> postDioRequest(
     String url, {
     dynamic data,
     dynamic headers,

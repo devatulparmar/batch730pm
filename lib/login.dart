@@ -5,6 +5,7 @@ import 'package:batch730pm/utils/common_snackbar.dart';
 import 'package:batch730pm/utils/const.dart';
 import 'package:batch730pm/utils/const_colors.dart';
 import 'package:batch730pm/utils/ui_helper.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -29,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Future _loginAPI() async {
     setState(() => isLoading = true);
 
-    var response = ApiRepository().postDioRequest(
+    Response response = await ApiRepository().postDioRequest(
         'https://reqres.in/api/login',
       data: {
         "email": "eve.holt@reqres.in",
@@ -63,12 +64,12 @@ class _LoginScreenState extends State<LoginScreen> {
     //   // },
     // );
 
-    if (response.hashCode == 200) {
+    if (response.statusCode == 200) {
       setState(() => isLoading = false);
 
-      var decodedData = jsonDecode(response.data);
+      // Response decodedData = jsonDecode(response.data);
 
-      _preferences.setString(prefAuthToken, decodedData['token']);
+      _preferences.setString(prefAuthToken, response.data['token']);
       _preferences.setBool(prefIsLogin, true);
 
       MySnackBar.showMySnackBar(
@@ -86,9 +87,9 @@ class _LoginScreenState extends State<LoginScreen> {
       );
     } else {
       setState(() => isLoading = false);
-
-      var decodedData = jsonDecode(response.data);
-      MySnackBar.showMySnackBar(content: decodedData['error']);
+      print(response.data);
+      // var decodedData = jsonDecode(response.data);
+      MySnackBar.showMySnackBar(content: response.data['error']);
     }
   }
 
