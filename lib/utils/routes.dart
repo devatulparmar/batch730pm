@@ -5,6 +5,7 @@ import 'package:batch730pm/gridview.dart';
 import 'package:batch730pm/list.dart';
 import 'package:batch730pm/location_screen.dart';
 import 'package:batch730pm/register_screen.dart';
+import 'package:batch730pm/tic_tac_game.dart';
 import 'package:batch730pm/travel_screen.dart';
 import 'package:batch730pm/user_details.dart';
 import 'package:batch730pm/utils/const.dart';
@@ -36,6 +37,8 @@ class MyAppRouter {
         return MaterialPageRoute(builder: (_) => const EmployeeListScreen());
       case routeMySegmentedButtonScreen:
         return MaterialPageRoute(builder: (_) => const MySegmentedButtonScreen());
+      case routeTicTacGame:
+        return MaterialPageRoute(builder: (_) => const TicTacGame());
       case routeUserDetailsScreen:
         return MaterialPageRoute(builder: (_) => UserDetailsScreen(arguments: settings.arguments));
       default:

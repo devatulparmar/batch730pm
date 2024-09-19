@@ -9,6 +9,7 @@ const String routeTravelScreen = "/TravelScreen";
 const String routeLocationScreen = "/routeLocationScreen";
 const String routeEmployeeListScreen = "/routeEmployeeListScreen";
 const String routeMySegmentedButtonScreen = "/routeMySegmentedButtonScreen";
+const String routeTicTacGame = "/routeTicTacGame";
 const String routeScreen3 = "/Screen3";
 const String routeLogin = "/Login";
 const String routeRegister = "/Register";

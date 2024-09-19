@@ -316,6 +316,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
             MyListItem(
               iconData: Icons.select_all,
+              title: 'Tic Tac Game',
+              isSelected: isSelectedItem,
+              onTap: (){
+                Navigator.pushNamed(context, routeTicTacGame);
+              },
+            ),
+            MyListItem(
+              iconData: Icons.select_all,
               title: 'Segmented Button Screen',
               isSelected: isSelectedItem,
               onTap: (){
