@@ -8,14 +8,14 @@ class TicTacGame extends StatefulWidget {
 }
 
 class _TicTacGameState extends State<TicTacGame> {
-  List<String> board = List.filled(9, '');
+  List<String> _boardList = List.filled(9, '');
   String currentPlayer = 'X';
   String winner = '';
 
   void playMove(int index) {
-    if (board[index].isEmpty && winner.isEmpty) {
+    if (_boardList[index].isEmpty && winner.isEmpty) {
       setState(() {
-        board[index] = currentPlayer;
+        _boardList[index] = currentPlayer;
         winner = checkWinner();
         currentPlayer = currentPlayer == 'X' ? 'O' : 'X';
       });
@@ -34,17 +34,45 @@ class _TicTacGameState extends State<TicTacGame> {
       [2, 4, 6],
     ];
 
-    for (var combo in winningCombinations) {
-      if (board[combo[0]] == board[combo[1]] && board[combo[1]] == board[combo[2]] && board[combo[0]].isNotEmpty) {
-        return board[combo[0]];
+
+    print(_boardList);
+
+    /// for
+    for (int i = 0; i < winningCombinations.length; i++) {
+      int firstIndex = winningCombinations[i][0];
+      int sndIndex = winningCombinations[i][1];
+      int thirdIndex = winningCombinations[i][2];
+
+      if (_boardList[firstIndex] == _boardList[sndIndex] && _boardList[sndIndex] == _boardList[thirdIndex] && _boardList[firstIndex].isNotEmpty) {
+        print(winningCombinations[i]);
+        return _boardList[firstIndex];
       }
     }
-    return board.contains('') ? '' : 'Draw';
+
+    /// for each
+    // for (var item in winningCombinations) {
+    //   int firstIndex = item[0];
+    //   int sndIndex = item[1];
+    //   int thirdIndex = item[2];
+    //
+    //   if (_boardList[firstIndex] == _boardList[sndIndex] && _boardList[sndIndex] == _boardList[thirdIndex] && _boardList[firstIndex].isNotEmpty) {
+    //     print(item);
+    //     return _boardList[firstIndex];
+    //   }
+    // }
+
+    ///old code
+    // for (var combo in winningCombinations) {
+    //   if (board[combo[0]] == board[combo[1]] && board[combo[1]] == board[combo[2]] && board[combo[0]].isNotEmpty) {
+    //     return board[combo[0]];
+    //   }
+    // }
+    return _boardList.contains('') ? '' : 'Draw';
   }
 
   void resetGame() {
     setState(() {
-      board = List.filled(9, '');
+      _boardList = List.filled(9, '');
       currentPlayer = 'X';
       winner = '';
     });
@@ -74,7 +102,7 @@ class _TicTacGameState extends State<TicTacGame> {
           GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 3,
-              childAspectRatio: 1.0,
+              childAspectRatio: 2/1,
             ),
             itemCount: 9,
             shrinkWrap: true,
@@ -89,9 +117,32 @@ class _TicTacGameState extends State<TicTacGame> {
                   ),
                   child: Center(
                     child: Text(
-                      board[index],
-                      style: const TextStyle(fontSize: 48, color: Colors.white),
+                      _boardList[index],
+                      style: const TextStyle(fontSize: 25, color: Colors.white),
                     ),
+                  ),
+                ),
+              );
+            },
+          ),
+          GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              childAspectRatio: 2/1,
+            ),
+            itemCount: 9,
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              return Container(
+                margin: const EdgeInsets.all(4.0),
+                decoration: BoxDecoration(
+                  color: Colors.blueAccent,
+                  border: Border.all(color: Colors.black),
+                ),
+                child: Center(
+                  child: Text(
+                    index.toString(),
+                    style: const TextStyle(fontSize: 25, color: Colors.white),
                   ),
                 ),
               );
