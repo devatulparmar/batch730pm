@@ -6,7 +6,10 @@ import 'package:batch730pm/register_screen.dart';
 import 'package:batch730pm/sales_screen.dart';
 import 'package:batch730pm/search_screen.dart';
 import 'package:batch730pm/user_details.dart';
+import 'package:batch730pm/utils/const.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class MyBottomNavScreen extends StatefulWidget {
   const MyBottomNavScreen({super.key});
@@ -82,7 +85,7 @@ class _MyBottomNavScreenState extends State<MyBottomNavScreen> {
         shadowColor: Colors.red,
         animationDuration: const Duration(seconds: 2),
         surfaceTintColor: Colors.red,
-        destinations: const [
+        destinations: [
           NavigationDestination(
             icon: Icon(Icons.home),
             label: '',
@@ -97,7 +100,16 @@ class _MyBottomNavScreenState extends State<MyBottomNavScreen> {
             label: '',
           ),
           NavigationDestination(
-            icon: Icon(Icons.notifications),
+            icon: Badge(
+              label: Text('10+'),
+              child: Icon(Icons.notifications),
+              backgroundColor: Colors.amber,
+              textColor: Colors.black,
+              isLabelVisible: true,
+              textStyle: txtStyle,
+              // padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+              // largeSize: 35,
+            ),
             label: '',
           ),
           NavigationDestination(
@@ -114,10 +126,10 @@ class _MyBottomNavScreenState extends State<MyBottomNavScreen> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: (){
+        onPressed: () {
           print('clicked');
         },
-        icon:const Icon(Icons.add),
+        icon: const Icon(Icons.add),
         label: const Text('Add New Task'),
       ),
     );

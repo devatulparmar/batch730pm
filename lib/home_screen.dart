@@ -8,6 +8,7 @@ import 'package:batch730pm/utils/const.dart';
 import 'package:batch730pm/login.dart';
 import 'package:batch730pm/screen2.dart';
 import 'package:batch730pm/widgets/common_drawer.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
@@ -21,6 +22,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List tempList = [];
+  List _carouselSliderList = [1, 2, 3, 4, 5];
 
   List<UserData> _userList = [];
   ListView _listviewWidget(BuildContext context) {
@@ -125,7 +127,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future _getData() async {
-    var response = await ApiRepository().getAPIRequest('https://reqres.in/api/users') as Response;
+    var response = await ApiRepository()
+        .getAPIRequest('https://reqres.in/api/users') as Response;
     // Response response = await http.get(
     //   Uri.parse('https://reqres.in/api/users'),
     // );
@@ -134,7 +137,8 @@ class _HomeScreenState extends State<HomeScreen> {
       print('api called');
       var decodedData = jsonDecode(response.body);
       tempList = decodedData['data'] as List;
-      _userList = tempList.map((dynamic obj) => UserData.fromJson(obj)).toList();
+      _userList =
+          tempList.map((dynamic obj) => UserData.fromJson(obj)).toList();
       setState(() {});
     } else {
       print(response.statusCode);
@@ -153,58 +157,86 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         body: RefreshIndicator(
           onRefresh: _getData,
-          child: ListView.builder(
-            itemCount: _userList.length,
-            padding: const EdgeInsets.all(10),
-            itemBuilder: (BuildContext context, int index) {
-              return Card(
-                elevation: 10,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Column(
-                  children: [
-                    Container(
-                      height: 200,
-                      width: 600,
-                      decoration: const BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(15),
-                          topLeft: Radius.circular(15),
-                        ),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                CarouselSlider(
+                  options: CarouselOptions(
+                    autoPlay: true,
+                    autoPlayInterval: const Duration(seconds: 1),
+                    aspectRatio: 3/1,
+                    onPageChanged: 
+                  ),
+                  items: _carouselSliderList.map((dynamic i) {
+                    return Container(
+                      width: MediaQuery.of(context).size.width,
+                      margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                      decoration: const BoxDecoration(color: Colors.amber),
+                      child: Image.network(
+                        'https://static.remove.bg/sample-gallery/graphics/bird-thumbnail.jpg',
+                        width: MediaQuery.of(context).size.width,
+                        fit: BoxFit.fitWidth,
                       ),
-                    ),
-                    Padding(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    );
+                  }).toList(),
+                ),
+                ListView.builder(
+                  itemCount: _userList.length,
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.all(10),
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (BuildContext context, int index) {
+                    return Card(
+                      elevation: 10,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Column(
                         children: [
-                          Text(
-                            'Fist Name: ${_userList[index].firstName}',
-                            style: const TextStyle(fontSize: 16),
+                          Container(
+                            height: 200,
+                            width: 600,
+                            decoration: const BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(15),
+                                topLeft: Radius.circular(15),
+                              ),
+                            ),
                           ),
-                          const Icon(Icons.more_vert),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Fist Name: ${_userList[index].firstName}',
+                                  style: txtStyle,
+                                ),
+                                const Icon(Icons.more_vert),
+                              ],
+                            ),
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            child: Row(
+                              children: [
+                                Text(
+                                  'Sub Title',
+                                  style: TextStyle(fontSize: 12),
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
-                    ),
-                    Padding(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                      child: Row(
-                        children: const [
-                          Text(
-                            'Sub Title',
-                            style: TextStyle(fontSize: 12),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                    );
+                  },
                 ),
-              );
-            },
+              ],
+            ),
           ),
         ),
       ),
