@@ -165,7 +165,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     autoPlay: true,
                     autoPlayInterval: const Duration(seconds: 1),
                     aspectRatio: 3/1,
-                    onPageChanged: 
                   ),
                   items: _carouselSliderList.map((dynamic i) {
                     return Container(
