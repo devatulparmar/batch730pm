@@ -315,6 +315,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
             // ),
 
             MyListItem(
+              iconData: Icons.punch_clock,
+              title: 'Clock Screen',
+              isSelected: isSelectedItem,
+              onTap: (){
+                Navigator.pushNamed(context, routeClockScreen);
+              },
+            ),
+            MyListItem(
               iconData: Icons.select_all,
               title: 'Tic Tac Game',
               isSelected: isSelectedItem,

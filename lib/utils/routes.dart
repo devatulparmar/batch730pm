@@ -1,5 +1,6 @@
 import 'package:batch730pm/SegmentedButtonScreen.dart';
 import 'package:batch730pm/bottom_nav_screen.dart';
+import 'package:batch730pm/clock_screen.dart';
 import 'package:batch730pm/employee_list.dart';
 import 'package:batch730pm/gridview.dart';
 import 'package:batch730pm/list.dart';
@@ -39,6 +40,8 @@ class MyAppRouter {
         return MaterialPageRoute(builder: (_) => const MySegmentedButtonScreen());
       case routeTicTacGame:
         return MaterialPageRoute(builder: (_) => const TicTacGame());
+      case routeClockScreen:
+        return MaterialPageRoute(builder: (_) => const ClockScreen());
       case routeUserDetailsScreen:
         return MaterialPageRoute(builder: (_) => UserDetailsScreen(arguments: settings.arguments));
       default:
