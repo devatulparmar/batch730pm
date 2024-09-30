@@ -77,53 +77,73 @@ class _MyBottomNavScreenState extends State<MyBottomNavScreen> {
       //     setState(() {});
       //   },
       // ),
-      bottomNavigationBar: NavigationBar(
-        labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
-        backgroundColor: Colors.white,
-        elevation: 100,
-        height: 50,
-        shadowColor: Colors.red,
-        animationDuration: const Duration(seconds: 2),
-        surfaceTintColor: Colors.red,
-        destinations: [
-          NavigationDestination(
-            icon: Icon(Icons.home),
-            label: '',
-            // tooltip: 'Home',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.search),
-            label: '',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.settings),
-            label: '',
-          ),
-          NavigationDestination(
-            icon: Badge(
-              label: Text('10+'),
-              child: Icon(Icons.notifications),
-              backgroundColor: Colors.amber,
-              textColor: Colors.black,
-              isLabelVisible: true,
-              textStyle: txtStyle,
-              // padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-              // largeSize: 35,
+      bottomNavigationBar: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: 5),
+            child: NavigationBar(
+              labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+              backgroundColor: Colors.white,
+              shadowColor: Colors.red,
+              animationDuration: const Duration(seconds: 2),
+              surfaceTintColor: Colors.red,
+              destinations: [
+                const NavigationDestination(
+                  icon: Icon(Icons.home),
+                  label: '',
+                  // tooltip: 'Home',
+                ),
+                const NavigationDestination(
+                  icon: Icon(Icons.search),
+                  label: '',
+                ),
+                const NavigationDestination(
+                  icon: Icon(Icons.settings),
+                  label: 'Settings',
+                ),
+                NavigationDestination(
+                  icon: Badge(
+                    label: const Text('10+'),
+                    backgroundColor: Colors.amber,
+                    textColor: Colors.black,
+                    isLabelVisible: true,
+                    textStyle: txtStyle,
+                    child: const Icon(Icons.notifications),
+                    // padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                    // largeSize: 35,
+                  ),
+                  label: '',
+                ),
+                const NavigationDestination(
+                  icon: Icon(Icons.person),
+                  label: '',
+                ),
+              ],
+              selectedIndex: selectedIndex,
+              onDestinationSelected: (int? index) {
+                setState(() {
+                  selectedIndex = index!;
+                });
+              },
             ),
-            label: '',
           ),
-          NavigationDestination(
-            icon: Icon(Icons.person),
-            label: '',
+          Positioned(
+            bottom: 0,
+            child: Container(
+              height: 50,
+              width: MediaQuery.of(context).size.width,
+              color: Colors.black,
+              child: const Center(
+                child: Text(
+                  'Copyright © 2024 Mayur Software - All Rights Reserved',
+                  style: TextStyle(color: Colors.white, fontSize: 10),
+                ),
+              ),
+            ),
           ),
         ],
-        selectedIndex: selectedIndex,
-        onDestinationSelected: (int? index) {
-          setState(() {
-            selectedIndex = index!;
-          });
-        },
       ),
+      persistentFooterAlignment: AlignmentDirectional.bottomEnd,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
