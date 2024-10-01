@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:batch730pm/utils/assets.dart';
@@ -14,6 +15,13 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+
+  final StreamController _streamController = StreamController();
+
+  Stream get _stream {
+    return _streamController.stream;
+  }
+
   final ImagePicker picker = ImagePicker();
   XFile? pickedImage;
   List<XFile> pickedMultipleImage = [];
@@ -80,6 +88,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.initState();
     _firstNameController = TextEditingController();
     _lastNameController = TextEditingController();
+
+    _stream.listen(
+          (value) {
+        print("value $value");
+      },
+    );
   }
 
   @override

@@ -5,9 +5,9 @@ import 'package:batch730pm/profile_screen.dart';
 import 'package:batch730pm/register_screen.dart';
 import 'package:batch730pm/sales_screen.dart';
 import 'package:batch730pm/search_screen.dart';
+import 'package:batch730pm/stream_example.dart';
 import 'package:batch730pm/user_details.dart';
 import 'package:batch730pm/utils/const.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -22,7 +22,7 @@ class _MyBottomNavScreenState extends State<MyBottomNavScreen> {
   int selectedIndex = 0;
 
   final List _list = [
-    const HomeScreen(),
+    const MyStreamScreen(),
     const SearchScreen(),
     const RegisterScreen(),
     const RegisterScreen(),
@@ -145,13 +145,13 @@ class _MyBottomNavScreenState extends State<MyBottomNavScreen> {
       ),
       persistentFooterAlignment: AlignmentDirectional.bottomEnd,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          print('clicked');
-        },
-        icon: const Icon(Icons.add),
-        label: const Text('Add New Task'),
-      ),
+      // floatingActionButton: FloatingActionButton.extended(
+      //   onPressed: () {
+      //     print('clicked');
+      //   },
+      //   icon: const Icon(Icons.add),
+      //   label: const Text('Add New Task'),
+      // ),
     );
   }
 }
