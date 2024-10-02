@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "665381692579",
+    "project_id": "batch730pm-20747",
+    "storage_bucket": "batch730pm-20747.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:665381692579:android:360fc23be9674a7a87cb16",
+        "android_client_info": {
+          "package_name": "com.weltec.batch730pm"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQhqapx5_Thf7uV-OA05UTjGj8TSfV-N0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
