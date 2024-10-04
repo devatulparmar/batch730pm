@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:batch730pm/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
@@ -36,7 +37,9 @@ class ReceivedNotification {
 
 class NotificationService {
   static final NotificationService _notificationService = NotificationService._internal();
-  factory NotificationService() => _notificationService;
+  factory NotificationService() {
+    return _notificationService;
+  }
   NotificationService._internal();
 
   Future<void> init() async {
@@ -119,7 +122,7 @@ class NotificationService {
   }
 
   Future<void> requestPermissions() async {
-    if (Platform.isIOS || Platform.isMacOS) {
+    if (Platform.isIOS) {
       await objLocalNotification
           .resolvePlatformSpecificImplementation<
           IOSFlutterLocalNotificationsPlugin>()
@@ -129,26 +132,24 @@ class NotificationService {
         sound: true,
         critical: true,
       );
-      await objLocalNotification
-          .resolvePlatformSpecificImplementation<
-          MacOSFlutterLocalNotificationsPlugin>()
-          ?.requestPermissions(
-        alert: true,
-        badge: true,
-        sound: true,
-        critical: true,
-      );
-    } else if (Platform.isAndroid) {
-      final AndroidFlutterLocalNotificationsPlugin? androidImplementation =
-      objLocalNotification.resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin>();
+      // await objLocalNotification
+      //     .resolvePlatformSpecificImplementation<
+      //     MacOSFlutterLocalNotificationsPlugin>()
+      //     ?.requestPermissions(
+      //   alert: true,
+      //   badge: true,
+      //   sound: true,
+      //   critical: true,
+      // );
+    }
+    else if (Platform.isAndroid) {
+      final AndroidFlutterLocalNotificationsPlugin? androidImplementation = objLocalNotification.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
       await androidImplementation?.requestPermission();
     }
   }
 
   configureDidReceiveLocalNotificationSubject() {
-    didReceiveLocalNotificationStream.stream
-        .listen((ReceivedNotification receivedNotification) async {});
+    didReceiveLocalNotificationStream.stream.listen((ReceivedNotification receivedNotification) async {});
   }
 
   configureSelectNotificationSubject() {
@@ -157,10 +158,7 @@ class NotificationService {
     });
   }
 
-  Future<void> showNotifications(
-      {String? title,
-        String? description,
-        Map<String, dynamic>? messageData}) async {
+  Future<void> showNotifications({String? title, String? description, Map<String, dynamic>? messageData}) async {
     await objLocalNotification.show(
       objLocalNotification.hashCode,
       "$title",
