@@ -11,7 +11,8 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
   if (message.notification == null) {
     NotificationService().showNotifications(title: message.data["title"], description: message.data["description"], messageData: message.data);
-  } else {
+  }
+  else {
     NotificationService().showNotifications(title: message.notification?.title, description: message.notification?.body, messageData: message.data);
   }
 }
@@ -19,7 +20,9 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 class PushNotificationService {
   Future<void> setupInteractedMessage() async {
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
     final messagingInstance = FirebaseMessaging.instance;
+
     NotificationSettings settings = await messagingInstance.requestPermission(
       alert: true,
       announcement: false,
@@ -42,6 +45,7 @@ class PushNotificationService {
           NotificationService().showNotifications(title: message.notification?.title, description: message.notification?.body, messageData: message.data);
         }
       });
+
       messagingInstance.getInitialMessage().then((RemoteMessage? message) {
         debugPrint('message :: $message');
         if (message != null) {
@@ -52,6 +56,7 @@ class PushNotificationService {
           }
         }
       });
+
       FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
         ///add stream payload when app is in background
         selectNotificationStream.add(jsonEncode(message.data));
