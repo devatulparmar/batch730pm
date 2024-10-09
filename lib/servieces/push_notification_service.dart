@@ -6,14 +6,14 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 
+
+/// use only in debug mode
+@pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   if (message.notification == null) {
     NotificationService().showNotifications(title: message.data["title"], description: message.data["description"], messageData: message.data);
-  }
-  else {
-    NotificationService().showNotifications(title: message.notification?.title, description: message.notification?.body, messageData: message.data);
   }
 }
 
