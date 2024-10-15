@@ -46,16 +46,16 @@ class PushNotificationService {
         }
       });
 
-      messagingInstance.getInitialMessage().then((RemoteMessage? message) {
-        debugPrint('message :: $message');
-        if (message != null) {
-          if (message.notification == null) {
-            NotificationService().showNotifications(title: message.data["title"], description: message.data["description"], messageData: message.data);
-          } else {
-            NotificationService().showNotifications(title: message.notification?.title, description: message.notification?.body, messageData: message.data);
-          }
-        }
-      });
+      // messagingInstance.getInitialMessage().then((RemoteMessage? message) {
+      //   debugPrint('message :: $message');
+      //   if (message != null) {
+      //     if (message.notification == null) {
+      //       NotificationService().showNotifications(title: message.data["title"], description: message.data["description"], messageData: message.data);
+      //     } else {
+      //       NotificationService().showNotifications(title: message.notification?.title, description: message.notification?.body, messageData: message.data);
+      //     }
+      //   }
+      // });
 
       FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
         ///add stream payload when app is in background

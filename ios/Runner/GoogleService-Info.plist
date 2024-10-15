@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyBAkvuEcRmI7PWwoFSVeWVfrzLsmeGOC7Q</string>
+	<key>GCM_SENDER_ID</key>
+	<string>665381692579</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.weltec.batch730pm</string>
+	<key>PROJECT_ID</key>
+	<string>batch730pm-20747</string>
+	<key>STORAGE_BUCKET</key>
+	<string>batch730pm-20747.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:665381692579:ios:98f9bdf0c2dbb87e87cb16</string>
+</dict>
+</plist>

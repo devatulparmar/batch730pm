@@ -11,6 +11,8 @@ import 'package:batch730pm/utils/const.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'Coffee_screen.dart';
+
 class MyBottomNavScreen extends StatefulWidget {
   const MyBottomNavScreen({super.key});
 
@@ -22,7 +24,7 @@ class _MyBottomNavScreenState extends State<MyBottomNavScreen> {
   int selectedIndex = 0;
 
   final List _list = [
-    const MyStreamScreen(),
+    const CoffeeScreen(),
     const SearchScreen(),
     const RegisterScreen(),
     const RegisterScreen(),
