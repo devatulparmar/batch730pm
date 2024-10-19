@@ -4,6 +4,7 @@ import 'package:batch730pm/repository/api_repository.dart';
 import 'package:batch730pm/utils/common_snackbar.dart';
 import 'package:batch730pm/utils/const.dart';
 import 'package:batch730pm/utils/const_colors.dart';
+import 'package:batch730pm/utils/google_sign_in.dart';
 import 'package:batch730pm/utils/ui_helper.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -31,11 +32,8 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() => isLoading = true);
 
     Response response = await ApiRepository().postDioRequest(
-        'https://reqres.in/api/login',
-      data: {
-        "email": "eve.holt@reqres.in",
-        "password": "cityslicka"
-      },
+      'https://reqres.in/api/login',
+      data: {"email": "eve.holt@reqres.in", "password": "cityslicka"},
     );
 
     // var response = await ApiRepository().postAPIRequest(
@@ -273,6 +271,33 @@ class _LoginScreenState extends State<LoginScreen> {
                       setState(() {});
                     },
                     child: const Text('Reset'),
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () async {
+                      GoogleSignInProvider googleProvider =
+                          GoogleSignInProvider();
+                      var response = await googleProvider.signIn();
+                      if (await googleProvider.isSignIn()) {
+                        print('success ${response.user!.email}');
+                      } else {
+                        print('failed');
+                      }
+                    },
+                    child: const Text('Sign in with Google'),
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () async {
+                      GoogleSignInProvider googleProvider = GoogleSignInProvider();
+                      var response = await googleProvider.signOut();
+                      if (await googleProvider.isSignIn()) {
+                        print('success ${response.user!.email}');
+                      } else {
+                        print('failed');
+                      }
+                    },
+                    child: const Text('Sign out Google'),
                   ),
                   const SizedBox(height: 20),
                 ],

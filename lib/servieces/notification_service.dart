@@ -144,7 +144,7 @@ class NotificationService {
     }
     else if (Platform.isAndroid) {
       final AndroidFlutterLocalNotificationsPlugin? androidImplementation = objLocalNotification.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
-      await androidImplementation?.requestPermission();
+      await androidImplementation?.requestNotificationsPermission();
     }
   }
 

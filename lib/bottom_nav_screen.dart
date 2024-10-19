@@ -82,7 +82,7 @@ class _MyBottomNavScreenState extends State<MyBottomNavScreen> {
       bottomNavigationBar: Stack(
         children: [
           Padding(
-            padding: const EdgeInsets.only(bottom: 5),
+            padding: const EdgeInsets.only(bottom: 45),
             child: NavigationBar(
               labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
               backgroundColor: Colors.white,

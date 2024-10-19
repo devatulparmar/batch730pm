@@ -1,5 +1,6 @@
 import 'package:batch730pm/utils/common_snackbar.dart';
 import 'package:batch730pm/utils/const.dart';
+import 'package:batch730pm/utils/google_sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -424,6 +425,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
               title: 'Travel Screen',
               isSelected: isSelectedItem,
               onTap: () => Navigator.pushNamed(context, routeTravelScreen),
+            ),
+            const SizedBox(height: 10),
+            MyListItem(
+              iconData: Icons.travel_explore,
+              title: 'Sign out Google',
+              isSelected: isSelectedItem,
+              onTap: () async {
+                GoogleSignInProvider googleProvider = GoogleSignInProvider();
+                var response = await googleProvider.signOut();
+                if (await googleProvider.isSignIn()) {
+                print('success ${response.user!.email}');
+                } else {
+                print('failed');
+                }
+              },
             ),
             const SizedBox(height: 10),
             isLogin

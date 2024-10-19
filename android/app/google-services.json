@@ -12,7 +12,20 @@
           "package_name": "com.weltec.batch730pm"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "665381692579-8mtkqotmif7lrikaku9euc0vg7eruivp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.weltec.batch730pm",
+            "certificate_hash": "3ccbe6da5673e5d493ecff0dca4cdeffe99d2076"
+          }
+        },
+        {
+          "client_id": "665381692579-117tl0klhnk7drm654a6o6it616u7ujd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAQhqapx5_Thf7uV-OA05UTjGj8TSfV-N0"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "665381692579-117tl0klhnk7drm654a6o6it616u7ujd.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "665381692579-bs0jc1jrt2lcvj2cb10c5ctlv5c1tukg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.weltec.batch730pm"
+              }
+            }
+          ]
         }
       }
     }
