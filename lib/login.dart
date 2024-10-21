@@ -9,6 +9,7 @@ import 'package:batch730pm/utils/ui_helper.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -34,6 +35,69 @@ class _LoginScreenState extends State<LoginScreen> {
     Response response = await ApiRepository().postDioRequest(
       'https://reqres.in/api/login',
       data: {"email": "eve.holt@reqres.in", "password": "cityslicka"},
+    );
+
+    // var response = await ApiRepository().postAPIRequest(
+    //   'https://reqres.in/api/login',
+    //   body: {
+    //     // "email": _emailController.text,
+    //     // "password": _passwordController.text,
+    //
+    //     "email": "eve.holt@reqres.in",
+    //     "password": "cityslicka"
+    //   },
+    // ) as Response;
+
+    // Response response = await http.post(
+    //   Uri.parse('https://reqres.in/api/login'),
+    //   body: {
+    //     // "email": _emailController.text,
+    //     // "password": _passwordController.text,
+    //
+    //     "email": "eve.holt@reqres.in",
+    //     "password": "cityslicka"
+    //   },
+    //   // headers: {
+    //   //   'Authorization': 'Bearer QpwL5tke4Pnpja7X4',
+    //   //   'Content-Type': 'application/json',
+    //   // },
+    // );
+
+    if (response.statusCode == 200) {
+      setState(() => isLoading = false);
+
+      // Response decodedData = jsonDecode(response.data);
+
+      _preferences.setString(prefAuthToken, response.data['token']);
+      _preferences.setBool(prefIsLogin, true);
+
+      MySnackBar.showMySnackBar(
+        content: "Success",
+        backgroundColor: Colors.green,
+        snackBarAction: SnackBarAction(
+          label: "",
+          onPressed: () {},
+        ),
+      );
+      Navigator.pushNamedAndRemoveUntil(
+        globalNavigatorKey.currentContext!,
+        "/",
+        (Route r) => false,
+      );
+    } else {
+      setState(() => isLoading = false);
+      print(response.data);
+      // var decodedData = jsonDecode(response.data);
+      MySnackBar.showMySnackBar(content: response.data['error']);
+    }
+  }
+
+  Future _loginWithGoogleAPI() async {
+    setState(() => isLoading = true);
+
+    Response response = await ApiRepository().postDioRequest(
+      'https://reqres.in/api/login',
+      data: {"email": emailText, "password": "", "social": "google"},
     );
 
     // var response = await ApiRepository().postAPIRequest(
@@ -279,9 +343,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           GoogleSignInProvider();
                       var response = await googleProvider.signIn();
                       if (await googleProvider.isSignIn()) {
+                        setState(() {
+                          emailText = response.user!.email ?? "";
+                        });
+                        _loginWithGoogleAPI();
                         print('success ${response.user!.email}');
                       } else {
-                        print('failed');
+                        print('logout');
                       }
                     },
                     child: const Text('Sign in with Google'),
@@ -289,7 +357,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () async {
-                      GoogleSignInProvider googleProvider = GoogleSignInProvider();
+                      GoogleSignInProvider googleProvider =
+                          GoogleSignInProvider();
                       var response = await googleProvider.signOut();
                       if (await googleProvider.isSignIn()) {
                         print('success ${response.user!.email}');
@@ -298,6 +367,23 @@ class _LoginScreenState extends State<LoginScreen> {
                       }
                     },
                     child: const Text('Sign out Google'),
+                  ),
+                  const SizedBox(height: 20),
+                  SignInWithAppleButton(
+                    onPressed: () async {
+                      try{
+                        final credential = await SignInWithApple.getAppleIDCredential(
+                          scopes: [
+                            AppleIDAuthorizationScopes.email,
+                            // AppleIDAuthorizationScopes.fullName,
+                          ],
+                        );
+                        print(credential);
+                      }
+                      catch (error){
+                        print(error);
+                      }
+                    },
                   ),
                   const SizedBox(height: 20),
                 ],
