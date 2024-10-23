@@ -2,6 +2,7 @@ import 'package:batch730pm/SegmentedButtonScreen.dart';
 import 'package:batch730pm/bottom_nav_screen.dart';
 import 'package:batch730pm/clock_screen.dart';
 import 'package:batch730pm/employee_list.dart';
+import 'package:batch730pm/google_maps_screen.dart';
 import 'package:batch730pm/gridview.dart';
 import 'package:batch730pm/list.dart';
 import 'package:batch730pm/location_screen.dart';
@@ -42,6 +43,8 @@ class MyAppRouter {
         return MaterialPageRoute(builder: (_) => const TicTacGame());
       case routeClockScreen:
         return MaterialPageRoute(builder: (_) => const ClockScreen());
+      case routeMyGoogleMapScreen:
+        return MaterialPageRoute(builder: (_) => const MyGoogleMapScreen());
       case routeUserDetailsScreen:
         return MaterialPageRoute(builder: (_) => UserDetailsScreen(arguments: settings.arguments));
       default:

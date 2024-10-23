@@ -24,11 +24,11 @@ class _MyBottomNavScreenState extends State<MyBottomNavScreen> {
   int selectedIndex = 0;
 
   final List _list = [
+    const ProfileScreen(),
     const CoffeeScreen(),
     const SearchScreen(),
     const RegisterScreen(),
     const RegisterScreen(),
-    const ProfileScreen(),
   ];
 
   @override

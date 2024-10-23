@@ -317,6 +317,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
             MyListItem(
               iconData: Icons.punch_clock,
+              title: 'Maps Screen',
+              isSelected: isSelectedItem,
+              onTap: (){
+                Navigator.pushNamed(context, routeMyGoogleMapScreen);
+              },
+            ),
+            MyListItem(
+              iconData: Icons.punch_clock,
               title: 'Clock Screen',
               isSelected: isSelectedItem,
               onTap: (){
