@@ -34,9 +34,10 @@ class PushNotificationService {
     );
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      final token = await messagingInstance.getToken();
-      debugPrint('FCM token :: $token');
-
+      if(Platform.isAndroid){
+        final token = await messagingInstance.getToken();
+        debugPrint('FCM token :: $token');
+      }
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
         debugPrint('onMessage :: $message');
         if (message.notification == null) {
