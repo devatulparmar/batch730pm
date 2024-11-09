@@ -13,6 +13,7 @@ const String routeClockScreen = "/ClockScreen";
 const String routeScreen3 = "/Screen3";
 const String routeLogin = "/Login";
 const String routeMyGoogleMapScreen = "/MyGoogleMapScreen";
+const String routeVideoScreen = "/routeVideoScreen";
 const String routeRegister = "/Register";
 const String routeUserDetailsScreen = "/UserDetailsScreen";
 

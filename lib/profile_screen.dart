@@ -316,6 +316,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
             // ),
 
             MyListItem(
+              iconData: Icons.video_camera_back,
+              title: 'Video Screen',
+              isSelected: isSelectedItem,
+              onTap: (){
+                Navigator.pushNamed(context, routeVideoScreen);
+              },
+            ),
+            MyListItem(
               iconData: Icons.punch_clock,
               title: 'Maps Screen',
               isSelected: isSelectedItem,

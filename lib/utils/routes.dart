@@ -14,6 +14,7 @@ import 'package:batch730pm/utils/const.dart';
 import 'package:batch730pm/login.dart';
 import 'package:batch730pm/home_screen.dart';
 import 'package:batch730pm/screen2.dart';
+import 'package:batch730pm/video_screen.dart';
 import 'package:flutter/material.dart';
 
 class MyAppRouter {
@@ -38,15 +39,19 @@ class MyAppRouter {
       case routeEmployeeListScreen:
         return MaterialPageRoute(builder: (_) => const EmployeeListScreen());
       case routeMySegmentedButtonScreen:
-        return MaterialPageRoute(builder: (_) => const MySegmentedButtonScreen());
+        return MaterialPageRoute(
+            builder: (_) => const MySegmentedButtonScreen());
       case routeTicTacGame:
         return MaterialPageRoute(builder: (_) => const TicTacGame());
       case routeClockScreen:
         return MaterialPageRoute(builder: (_) => const ClockScreen());
       case routeMyGoogleMapScreen:
         return MaterialPageRoute(builder: (_) => const MyGoogleMapScreen());
+      case routeVideoScreen:
+        return MaterialPageRoute(builder: (_) => const MyVideoScreen());
       case routeUserDetailsScreen:
-        return MaterialPageRoute(builder: (_) => UserDetailsScreen(arguments: settings.arguments));
+        return MaterialPageRoute(
+            builder: (_) => UserDetailsScreen(arguments: settings.arguments));
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
