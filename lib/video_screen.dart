@@ -14,8 +14,9 @@ class _MyVideoScreenState extends State<MyVideoScreen> {
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.networkUrl(Uri.parse(
-        'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'))
+    // _controller = VideoPlayerController.networkUrl(Uri.parse(
+    //     'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'))
+    _controller = VideoPlayerController.asset("videos/v1.mp4")
       ..initialize().then((_) {
         // _controller.play();
         setState(() {});
