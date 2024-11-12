@@ -40,8 +40,19 @@ class _MyVideoScreenState extends State<MyVideoScreen> {
         child: AspectRatio(
           aspectRatio: _controller.value.aspectRatio,
           child: Stack(
+            alignment: Alignment.bottomCenter,
             children: [
               VideoPlayer(_controller),
+              VideoProgressIndicator(
+                _controller,
+                allowScrubbing: true,
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                colors: const VideoProgressColors(
+                  playedColor: Colors.green,
+                  bufferedColor: Colors.white,
+                  backgroundColor: Colors.grey,
+                ),
+              ),
               Visibility(
                 visible: _controller.value.isBuffering,
                 child: const Center(child: CircularProgressIndicator()),
