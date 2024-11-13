@@ -119,8 +119,7 @@ class _EmployeeListScreenState extends State<EmployeeListScreen> {
   }
 
   Future<List<UserData>> _getData() async {
-    var response = await ApiRepository()
-        .getAPIRequest('https://reqres.in/api/users') as Response;
+    Response response = await ApiRepository().getAPIRequest('https://reqres.in/api/users');
     // Response response = await http.get(
     //   Uri.parse('https://reqres.in/api/users'),
     // );

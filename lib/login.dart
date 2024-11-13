@@ -6,8 +6,10 @@ import 'package:batch730pm/utils/const.dart';
 import 'package:batch730pm/utils/const_colors.dart';
 import 'package:batch730pm/utils/google_sign_in.dart';
 import 'package:batch730pm/utils/ui_helper.dart';
+import 'package:dio/dio.dart' as dio;
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
@@ -32,43 +34,28 @@ class _LoginScreenState extends State<LoginScreen> {
   Future _loginAPI() async {
     setState(() => isLoading = true);
 
-    Response response = await ApiRepository().postDioRequest(
-      'https://reqres.in/api/login',
-      data: {"email": "eve.holt@reqres.in", "password": "cityslicka"},
-    );
-
-    // var response = await ApiRepository().postAPIRequest(
+    // Response response = await ApiRepository().postDioRequest(
     //   'https://reqres.in/api/login',
-    //   body: {
-    //     // "email": _emailController.text,
-    //     // "password": _passwordController.text,
-    //
-    //     "email": "eve.holt@reqres.in",
-    //     "password": "cityslicka"
-    //   },
-    // ) as Response;
-
-    // Response response = await http.post(
-    //   Uri.parse('https://reqres.in/api/login'),
-    //   body: {
-    //     // "email": _emailController.text,
-    //     // "password": _passwordController.text,
-    //
-    //     "email": "eve.holt@reqres.in",
-    //     "password": "cityslicka"
-    //   },
-    //   // headers: {
-    //   //   'Authorization': 'Bearer QpwL5tke4Pnpja7X4',
-    //   //   'Content-Type': 'application/json',
-    //   // },
+    //   data: {"email": "eve.holt@reqres.in", "password": "cityslicka"},
     // );
 
+    http.Response response = await ApiRepository().postAPIRequest(
+      'https://reqres.in/api/login',
+      body: {
+        // "email": _emailController.text,
+        // "password": _passwordController.text,
+
+        "email": "eve.holt@reqres.in",
+        "password": "cityslicka"
+      },
+    );
+
+    var decodedData = jsonDecode(response.body);
     if (response.statusCode == 200) {
       setState(() => isLoading = false);
 
-      // Response decodedData = jsonDecode(response.data);
-
-      _preferences.setString(prefAuthToken, response.data['token']);
+      print('token == ${decodedData['token']}');
+      _preferences.setString(prefAuthToken, decodedData['token']);
       _preferences.setBool(prefIsLogin, true);
 
       MySnackBar.showMySnackBar(
@@ -86,19 +73,112 @@ class _LoginScreenState extends State<LoginScreen> {
       );
     } else {
       setState(() => isLoading = false);
-      print(response.data);
+      print(response.body);
       // var decodedData = jsonDecode(response.data);
-      MySnackBar.showMySnackBar(content: response.data['error']);
+      MySnackBar.showMySnackBar(content: decodedData['error']);
+    }
+  }
+
+  Future _loginAPIUsingDio() async {
+    print('api called');
+    try {
+      setState(() => isLoading = true);
+      dio.Response response = await ApiRepository().postDioRequest(
+        'https://reqres.in/api/login',
+        data: {"email": "eve.holt@reqres.in", "password": "cityslicka"},
+      );
+      if (response.statusCode == 200) {
+        setState(() => isLoading = false);
+
+        _preferences.setString(prefAuthToken, response.data['token']);
+        _preferences.setBool(prefIsLogin, true);
+
+        MySnackBar.showMySnackBar(
+          content: "Success",
+          backgroundColor: Colors.green,
+          snackBarAction: SnackBarAction(
+            label: "",
+            onPressed: () {},
+          ),
+        );
+        Navigator.pushNamedAndRemoveUntil(
+          globalNavigatorKey.currentContext!,
+          "/",
+              (Route r) => false,
+        );
+      }
+      else {
+        setState(() => isLoading = false);
+        MySnackBar.showMySnackBar(content: response.data['error']);
+      }
+    }
+    on DioException catch (error) {
+      setState(() => isLoading = false);
+      switch (error.type) {
+        case DioExceptionType.connectionTimeout:
+          return MySnackBar.showMySnackBar(
+            content: 'Connection Timeout!',
+            backgroundColor: Colors.red,
+          );
+
+        case DioExceptionType.badResponse:
+          return MySnackBar.showMySnackBar(
+            content: 'Bad Response!',
+            backgroundColor: Colors.red,
+          );
+
+        case DioExceptionType.receiveTimeout:
+          return MySnackBar.showMySnackBar(
+            content: 'Receive Timeout!',
+            backgroundColor: Colors.red,
+          );
+
+        case DioExceptionType.badCertificate:
+          return MySnackBar.showMySnackBar(
+            content: 'Bad Certificate!',
+            backgroundColor: Colors.red,
+          );
+
+        case DioExceptionType.cancel:
+          return MySnackBar.showMySnackBar(
+            content: 'Request Cancelled!',
+            backgroundColor: Colors.red,
+          );
+
+        case DioExceptionType.connectionError:
+          return MySnackBar.showMySnackBar(
+            content: 'Connection Error!',
+            backgroundColor: Colors.red,
+          );
+
+        case DioExceptionType.sendTimeout:
+          return MySnackBar.showMySnackBar(
+            content: 'Send Timeout!',
+            backgroundColor: Colors.red,
+          );
+
+        case DioExceptionType.unknown:
+          return MySnackBar.showMySnackBar(
+            content: 'Unknown Error!',
+            backgroundColor: Colors.red,
+          );
+
+        default:
+          return MySnackBar.showMySnackBar(
+            content: 'Something went wrong!',
+            backgroundColor: Colors.red,
+          );
+      }
     }
   }
 
   Future _loginWithGoogleAPI() async {
     setState(() => isLoading = true);
 
-    Response response = await ApiRepository().postDioRequest(
-      'https://reqres.in/api/login',
-      data: {"email": emailText, "password": "", "social": "google"},
-    );
+    // Response response = await ApiRepository().postDioRequest(
+    //   'https://reqres.in/api/login',
+    //   data: {"email": emailText, "password": "", "social": "google"},
+    // );
 
     // var response = await ApiRepository().postAPIRequest(
     //   'https://reqres.in/api/login',
@@ -126,33 +206,33 @@ class _LoginScreenState extends State<LoginScreen> {
     //   // },
     // );
 
-    if (response.statusCode == 200) {
-      setState(() => isLoading = false);
-
-      // Response decodedData = jsonDecode(response.data);
-
-      _preferences.setString(prefAuthToken, response.data['token']);
-      _preferences.setBool(prefIsLogin, true);
-
-      MySnackBar.showMySnackBar(
-        content: "Success",
-        backgroundColor: Colors.green,
-        snackBarAction: SnackBarAction(
-          label: "",
-          onPressed: () {},
-        ),
-      );
-      Navigator.pushNamedAndRemoveUntil(
-        globalNavigatorKey.currentContext!,
-        "/",
-        (Route r) => false,
-      );
-    } else {
-      setState(() => isLoading = false);
-      print(response.data);
-      // var decodedData = jsonDecode(response.data);
-      MySnackBar.showMySnackBar(content: response.data['error']);
-    }
+    // if (response.statusCode == 200) {
+    //   setState(() => isLoading = false);
+    //
+    //   // Response decodedData = jsonDecode(response.data);
+    //
+    //   _preferences.setString(prefAuthToken, response.data['token']);
+    //   _preferences.setBool(prefIsLogin, true);
+    //
+    //   MySnackBar.showMySnackBar(
+    //     content: "Success",
+    //     backgroundColor: Colors.green,
+    //     snackBarAction: SnackBarAction(
+    //       label: "",
+    //       onPressed: () {},
+    //     ),
+    //   );
+    //   Navigator.pushNamedAndRemoveUntil(
+    //     globalNavigatorKey.currentContext!,
+    //     "/",
+    //     (Route r) => false,
+    //   );
+    // } else {
+    //   setState(() => isLoading = false);
+    //   print(response.data);
+    //   // var decodedData = jsonDecode(response.data);
+    //   MySnackBar.showMySnackBar(content: response.data['error']);
+    // }
   }
 
   @override
@@ -371,16 +451,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: 20),
                   SignInWithAppleButton(
                     onPressed: () async {
-                      try{
-                        final credential = await SignInWithApple.getAppleIDCredential(
+                      try {
+                        final credential =
+                            await SignInWithApple.getAppleIDCredential(
                           scopes: [
                             AppleIDAuthorizationScopes.email,
                             // AppleIDAuthorizationScopes.fullName,
                           ],
                         );
                         print(credential);
-                      }
-                      catch (error){
+                      } catch (error) {
                         print(error);
                       }
                     },

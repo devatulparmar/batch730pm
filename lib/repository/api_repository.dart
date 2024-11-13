@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 
@@ -25,7 +24,7 @@ class ApiRepository {
       // cancelToken: cancelToken,
       // options: Options(
       //   headers: headers,
-      //   // contentType: 'Application/json',
+      //   contentType: 'Application/json',
       //   followRedirects: false,
       //   receiveTimeout: const Duration(seconds: 5),
       //   sendTimeout: const Duration(seconds: 2),
@@ -38,8 +37,6 @@ class ApiRepository {
   }
 
   Future postAPIRequest(String url, {dynamic body, dynamic headers}) async {
-    return await http.post(Uri.parse(url), body: body, headers: {
-      'authentication': "token",
-    });
+    return await http.post(Uri.parse(url), body: body, headers: headers);
   }
 }
