@@ -470,22 +470,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: const Text('Sign out Google'),
                   ),
                   const SizedBox(height: 20),
-                  SignInWithAppleButton(
-                    onPressed: () async {
-                      try {
-                        final credential =
-                            await SignInWithApple.getAppleIDCredential(
-                          scopes: [
-                            AppleIDAuthorizationScopes.email,
-                            // AppleIDAuthorizationScopes.fullName,
-                          ],
-                        );
-                        print(credential);
-                      } catch (error) {
-                        print(error);
-                      }
-                    },
-                  ),
+                  _signInWithAppleButton(),
                   const SizedBox(height: 20),
                 ],
               ),
@@ -502,6 +487,24 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _signInWithAppleButton(){
+    return SignInWithAppleButton(
+      onPressed: () async {
+        try {
+          final credential = await SignInWithApple.getAppleIDCredential(
+            scopes: [
+              AppleIDAuthorizationScopes.email,
+              // AppleIDAuthorizationScopes.fullName,
+            ],
+          );
+          print(credential);
+        } catch (error) {
+          print(error);
+        }
+      },
     );
   }
 }
