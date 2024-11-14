@@ -10,6 +10,7 @@ import 'package:dio/dio.dart' as dio;
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
@@ -24,6 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool isObscureText = true;
   bool isLoading = false;
   late SharedPreferences _preferences;
+  late TextEditingController _phoneController;
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
   late TextEditingController _confirmPasswordController;
@@ -238,6 +240,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
+    _phoneController = TextEditingController();
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
     _confirmPasswordController = TextEditingController();
@@ -282,6 +285,24 @@ class _LoginScreenState extends State<LoginScreen> {
               },
               child: ListView(
                 children: [
+                  IntlPhoneField(
+                    controller:_phoneController,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(35),
+                      ),
+                      hintText: "Enter an Email",
+                      label: const Text('This is label'),
+                      prefixIcon: const Icon(
+                        Icons.email,
+                        color: Colors.red,
+                      ),
+                    ),
+                    initialCountryCode: 'IN',
+                    onChanged: (phone) {
+                      print(phone.completeNumber);
+                    },
+                  ),
                   TextFormField(
                     controller: _emailController,
                     textInputAction: TextInputAction.next,
