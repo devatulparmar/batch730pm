@@ -15,7 +15,7 @@ class EmployeeModel {
     if (json['data'] != null) {
       data = [];
       json['data'].forEach((v) {
-        data?.add(Data.fromJson(v));
+        data?.add(EmployeeData.fromJson(v));
       });
     }
     support = json['support'] != null ? Support.fromJson(json['support']) : null;
@@ -24,7 +24,7 @@ class EmployeeModel {
   int? perPage;
   int? total;
   int? totalPages;
-  List<Data>? data;
+  List<EmployeeData>? data;
   Support? support;
 
   Map<String, dynamic> toJson() {
@@ -65,15 +65,15 @@ class Support {
 
 }
 
-class Data {
-  Data({
+class EmployeeData {
+  EmployeeData({
       this.id, 
       this.email, 
       this.firstName, 
       this.lastName, 
       this.avatar,});
 
-  Data.fromJson(dynamic json) {
+  EmployeeData.fromJson(dynamic json) {
     id = json['id'];
     email = json['email'];
     firstName = json['first_name'];

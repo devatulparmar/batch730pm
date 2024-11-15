@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:batch730pm/utils/assets.dart';
 import 'package:batch730pm/utils/const.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -46,6 +47,84 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   late TextEditingController _firstNameController;
   late TextEditingController _lastNameController;
+
+  Future _showBottomSheet() async {
+    showModalBottomSheet(
+      context: context,
+      enableDrag: true,
+      // isDismissible: false,
+      useSafeArea: true,
+      // isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(35),
+          topLeft: Radius.circular(35),
+        ),
+      ),
+      builder: (BuildContext context) {
+        // return CupertinoTimerPicker(onTimerDurationChanged: (value) {
+        //   print(value);
+        // });
+        // return CupertinoDatePicker(
+        //   initialDateTime: DateTime.now(),
+        //   onDateTimeChanged: (DateTime value) {},
+        // );
+        return Container(
+          decoration: const BoxDecoration(
+            color: Colors.amber,
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(35),
+              topLeft: Radius.circular(35),
+            ),
+          ),
+          child: Column(
+            // mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(Icons.close),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Future _showCupertinoAlertDialog() async {
+    return showCupertinoDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return CupertinoAlertDialog(
+          title: const Text('This is title'),
+          content: const Text('This is content.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Close'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Ok'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   Future showDate() async {
     var pickedDate = await showDatePicker(
@@ -442,7 +521,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 IconButton(
                   onPressed: () {
                     /// open date picker
-                    showDate();
+                    // showDate();
+                    // _showCupertinoAlertDialog();
+                    _showBottomSheet();
                   },
                   icon: const Icon(Icons.calendar_month),
                 ),

@@ -1,214 +1,171 @@
+import 'dart:async';
 import 'dart:convert';
-
-import 'package:batch730pm/model/users_model.dart';
-import 'package:batch730pm/repository/api_repository.dart';
-import 'package:batch730pm/utils/const.dart';
+import 'package:batch730pm/model/EmployeeModel.dart';
+import 'package:batch730pm/utils/common_snackbar.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
 class EmployeeListScreen extends StatefulWidget {
-  const EmployeeListScreen({Key? key}) : super(key: key);
+  const EmployeeListScreen({super.key});
 
   @override
   State<EmployeeListScreen> createState() => _EmployeeListScreenState();
 }
 
 class _EmployeeListScreenState extends State<EmployeeListScreen> {
+  int total = 0;
   List tempList = [];
+  List<EmployeeData> employeeList = [];
+  bool isLoader = false;
 
-  List<UserData> _userList = [];
-  ListView _listviewWidget(BuildContext context) {
-    return ListView(
-      children: [
-        Center(
-          child: ElevatedButton(
-            onPressed: () {
-              // MySnackBar.showMySnackBar(context: context, content: "Hello");
-              Navigator.pushNamed(
-                context,
-                routeRegister,
-              );
-            },
-            child: const Text('Register'),
-          ),
-        ),
-        const SizedBox(height: 15),
-        Center(
-          child: ElevatedButton(
-            onPressed: () {
-              // MySnackBar.showMySnackBar(context: context, content: "Hello");
-              Navigator.pushNamed(
-                context,
-                routeLogin,
-              );
-            },
-            child: const Text('Login'),
-          ),
-        ),
-        const SizedBox(height: 15),
-        Center(
-          child: ElevatedButton(
-            onPressed: () {
-              print('Clicked');
+  final StreamController _streamController = StreamController();
 
-              Navigator.pushNamed(
-                context,
-                routeScreen2,
-              );
+  Stream getEmployeeList() async* {
+    print('api called');
+    try {
+      // setState(() => isLoader = true);
+      isLoader = true;
+      _streamController.sink;
+      Response responseObj = await http.get(Uri.parse('https://reqres.in/api/users'));
 
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (BuildContext c) {
-              //       return Screen2();
-              //     },
-              //   ),
-              // );
-            },
-            child: const Text('Screen2'),
-          ),
-        ),
-        const SizedBox(height: 15),
-        Center(
-          child: ElevatedButton(
-            onPressed: () {
-              print('Clicked');
-
-              Navigator.pushNamed(
-                context,
-                routeListScreen,
-              );
-
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (BuildContext c) {
-              //       return Screen2();
-              //     },
-              //   ),
-              // );
-            },
-            child: const Text('ListScreen'),
-          ),
-        ),
-        const SizedBox(height: 15),
-        Center(
-          child: ElevatedButton(
-            onPressed: () {
-              print('Clicked');
-
-              Navigator.pushNamed(
-                context,
-                routeGridViewScreen,
-              );
-
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (BuildContext c) {
-              //       return Screen2();
-              //     },
-              //   ),
-              // );
-            },
-            child: const Text('GridViewScreen'),
-          ),
-        ),
-      ],
-    );
+      if (responseObj.statusCode == 200) {
+        var jsonDataObj = jsonDecode(responseObj.body);
+        tempList = jsonDataObj['data'] as List;
+        total = jsonDataObj['total'];
+        employeeList = tempList.map((dynamic element) => EmployeeData.fromJson(element)).toList();
+        // setState(() => isLoader = false);
+        isLoader = false;
+        _streamController.sink;
+      } else {
+        // setState(() => isLoader = false);
+        isLoader = false;
+        _streamController.sink;
+        MySnackBar.showMySnackBar(content: 'Something went wrong!');
+      }
+    } catch (error) {
+      // setState(() => isLoader = false);
+      isLoader = false;
+      _streamController.sink;
+     yield MySnackBar.showMySnackBar(content: error.toString());
+    }
   }
 
-  Future<List<UserData>> _getData() async {
-    Response response = await ApiRepository().getAPIRequest('https://reqres.in/api/users');
-    // Response response = await http.get(
-    //   Uri.parse('https://reqres.in/api/users'),
-    // );
+  Future getEmployeeListOld() async {
+    print('api called');
+    try {
+      setState(() => isLoader = true);
+      Response responseObj =
+          await http.get(Uri.parse('https://reqres.in/api/users'));
 
-    if (response.statusCode == 200) {
-      print('api called');
-      var decodedData = jsonDecode(response.body);
-      tempList = decodedData['data'] as List;
-      _userList = tempList.map((dynamic obj) => UserData.fromJson(obj)).toList();
-      setState(() {});
-      return _userList;
-    } else {
-      print(response.statusCode);
+      if (responseObj.statusCode == 200) {
+        var jsonDataObj = jsonDecode(responseObj.body);
+        tempList = jsonDataObj['data'] as List;
+        total = jsonDataObj['total'];
+        employeeList = tempList
+            .map((dynamic element) => EmployeeData.fromJson(element))
+            .toList();
+        setState(() => isLoader = false);
+      } else {
+        setState(() => isLoader = false);
+        MySnackBar.showMySnackBar(content: 'Something went wrong!');
+      }
+    } catch (error) {
+      setState(() => isLoader = false);
+      return MySnackBar.showMySnackBar(content: error.toString());
     }
-    return _userList;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _streamController.close();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: FutureBuilder(
-        future: _getData(),
-        builder: (BuildContext context, AsyncSnapshot snapShot) {
-          if (snapShot.hasData) {
-            return ListView.builder(
-              itemCount: _userList.length,
-              padding: const EdgeInsets.all(10),
-              itemBuilder: (BuildContext context, int index) {
-                return Card(
-                  elevation: 10,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
+    return StreamBuilder(
+        stream: getEmployeeList(),
+        builder: (context, snapshot) {
+          return Scaffold(
+            backgroundColor: Colors.white,
+            appBar: AppBar(
+              title: const Text('Employee List Screen'),
+              actions: [
+                IconButton(
+                  onPressed: () => getEmployeeList(),
+                  icon: const Icon(
+                    Icons.refresh,
+                    size: 25,
                   ),
-                  child: Column(
-                    children: [
-                      Container(
-                        height: 200,
-                        width: 600,
-                        decoration: const BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(15),
-                            topLeft: Radius.circular(15),
+                ),
+              ],
+            ),
+            body: Stack(
+              children: [
+                RefreshIndicator(
+                  onRefresh: () => getEmployeeListOld(),
+                  backgroundColor: Colors.red,
+                  color: Colors.white,
+                  strokeWidth: 5,
+                  triggerMode: RefreshIndicatorTriggerMode.onEdge,
+                  // displacement: 250,
+                  // edgeOffset: 10,
+                  // semanticsLabel: 'semantics label',
+                  // semanticsValue: 'semantic value',
+                  child: ListView.builder(
+                    itemCount: employeeList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Card(
+                          elevation: 10,
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Center(
+                                  child: CircleAvatar(
+                                    backgroundImage: NetworkImage(
+                                        employeeList[index].avatar ?? ""),
+                                    radius: 100,
+                                  ),
+                                ),
+                                Text(
+                                    'Employee ID :${employeeList[index].id ?? ''}'),
+                                Text(
+                                    'First Name :${employeeList[index].firstName ?? ''}'),
+                                Text(
+                                    'Last Name :${employeeList[index].lastName ?? ""}'),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Fist Name: ${_userList[index].firstName}',
-                              style: const TextStyle(fontSize: 16),
-                            ),
-                            const Icon(Icons.more_vert),
-                          ],
-                        ),
-                      ),
-                      const Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                        child: Row(
-                          children: [
-                            Text(
-                              'Sub Title',
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                      );
+                    },
                   ),
-                );
-              },
-            );
-          }
-          else if (snapShot.hasError) {
-            return const Center(
-              child: Text('Something went wrong!'),
-            );
-          }
-          else {
-            return const Center(child: CircularProgressIndicator());
-          }
-        },
-      ),
-    );
+                ),
+                Visibility(
+                  visible: isLoader,
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
+                    child: const Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.green,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        });
   }
 }
