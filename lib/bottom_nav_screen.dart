@@ -81,52 +81,61 @@ class _MyBottomNavScreenState extends State<MyBottomNavScreen> {
       // ),
       bottomNavigationBar: Stack(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 45),
-            child: NavigationBar(
-              labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
-              backgroundColor: Colors.white,
-              shadowColor: Colors.red,
-              animationDuration: const Duration(seconds: 2),
-              surfaceTintColor: Colors.red,
-              destinations: [
-                const NavigationDestination(
-                  icon: Icon(Icons.home),
-                  label: '',
-                  // tooltip: 'Home',
-                ),
-                const NavigationDestination(
-                  icon: Icon(Icons.search),
-                  label: '',
-                ),
-                const NavigationDestination(
-                  icon: Icon(Icons.settings),
-                  label: 'Settings',
-                ),
-                NavigationDestination(
-                  icon: Badge(
-                    label: const Text('10+'),
-                    backgroundColor: Colors.amber,
-                    textColor: Colors.black,
-                    isLabelVisible: true,
-                    textStyle: txtStyle,
-                    child: const Icon(Icons.notifications),
-                    // padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                    // largeSize: 35,
+          Theme(
+            data: ThemeData(
+              colorScheme: ColorScheme.fromSwatch(
+                accentColor: Colors.green,
+                backgroundColor: Colors.blueAccent,
+                primarySwatch: Colors.indigo,
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 45),
+              child: NavigationBar(
+                labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+                // backgroundColor: Colors.white,
+                // shadowColor: Colors.red,
+                animationDuration: const Duration(seconds: 2),
+                // surfaceTintColor: Colors.red,
+                destinations: [
+                  const NavigationDestination(
+                    icon: Icon(Icons.home),
+                    label: '',
+                    // tooltip: 'Home',
                   ),
-                  label: '',
-                ),
-                const NavigationDestination(
-                  icon: Icon(Icons.person),
-                  label: '',
-                ),
-              ],
-              selectedIndex: selectedIndex,
-              onDestinationSelected: (int? index) {
-                setState(() {
-                  selectedIndex = index!;
-                });
-              },
+                  const NavigationDestination(
+                    icon: Icon(Icons.search),
+                    label: '',
+                  ),
+                  const NavigationDestination(
+                    icon: Icon(Icons.settings),
+                    label: 'Settings',
+                  ),
+                  NavigationDestination(
+                    icon: Badge(
+                      label: const Text('10+'),
+                      backgroundColor: Colors.amber,
+                      textColor: Colors.black,
+                      isLabelVisible: true,
+                      textStyle: txtStyle,
+                      child: const Icon(Icons.notifications),
+                      // padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                      // largeSize: 35,
+                    ),
+                    label: '',
+                  ),
+                  const NavigationDestination(
+                    icon: Icon(Icons.person),
+                    label: '',
+                  ),
+                ],
+                selectedIndex: selectedIndex,
+                onDestinationSelected: (int? index) {
+                  setState(() {
+                    selectedIndex = index!;
+                  });
+                },
+              ),
             ),
           ),
           Positioned(

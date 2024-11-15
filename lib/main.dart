@@ -27,7 +27,7 @@ void main() async {
       scaffoldMessengerKey: scaffoldMessengerKey,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.orange,
       ),
       onGenerateRoute: MyAppRouter.generateRoute,
     ),
